@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js"
+    "start": "node ./server/server.js",
+    "dev": "nodemon ./server/server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,12 @@
     "morgan": "^1.10.0",
     "node-uuid": "^1.4.8",
     "rfs": "^9.0.6",
-    "rotating-file-stream": "^3.0.2"
+    "rotating-file-stream": "^3.0.2",
+
+    "cors": "^2.8.5",
+    "lowdb": "^1.0.0",
+    "nanoid": "^3.1.22",
+    "nodemon": "^2.0.7",
+    "swagger-ui-express": "^4.1.6"  
   }
 }
