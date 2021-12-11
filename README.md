@@ -68,13 +68,21 @@ You should receive back a status code of 200 and a text/plain response like:
 
 > ```Welcome to Test Dialog Engine version 0.0.1```
 
+Then Swagger UI should be at:
+
+> ```https://localhost:3000/engine/api```
+
+
 ### Review the Node code
 
-The server code is stored in the ```/server/``` directory:
+The server code is stored in the ```./server/``` directory:
 
 - ```server.js``` - configures the Node Express server using ```config.js```and these below:
 - ```logger.js``` - configures the Morgan access log for the file system.
 - ```engine.js``` - configures the API Express Router endpoints for the server.
+
+The server Swagger JSON is stored in the ```./server/docs/``` directory.
+
 
 ### Server Access Logs
 
