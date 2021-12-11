@@ -1,0 +1,9 @@
+node_modules
+dist
+logs
+.vscode
+.git
+
+key.pem
+cert.pem
+config_runtime*

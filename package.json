@@ -1,0 +1,23 @@
+{
+  "name": "dialogserver",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "morgan": "^1.10.0",
+    "node-uuid": "^1.4.8",
+    "rfs": "^9.0.6",
+    "rotating-file-stream": "^3.0.2"
+  }
+}
