@@ -8,7 +8,7 @@ const config = require("../config");
 /**
  * simple /about endpoint
  */
-engine.get(config.API_ABOUT, function(req,res) {
+engine.get('/about', function(req,res) {
     var msg = `Welcome to ${config.API_NAME} version ${config.VERSION}`;
     res.writeHead(200, {
         'Content-Length': Buffer.byteLength(msg),

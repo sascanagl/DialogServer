@@ -4,10 +4,11 @@ const config = require("../config");
 
 const http = require("http"), https= require("https"), express = require("express");
 const logger = require("./logger");
-const cors = require("cors");
-const swagger = require("swagger-ui-express");
-const docs = require("./docs/basicInfo.js");
+const swaggerUI = require("swagger-ui-express");
+const docs = require('./docs/index');
+
 const engine = require("./engine");
+const synonyms = require("./synonyms");
 
 // instance the node server (Express)
 const app = express();
@@ -18,8 +19,9 @@ app.use(logger);
 /**
  * Route /engine/ REST Api calls to the engine Router
  */
-app.use(config.API_ROOT, engine);
-app.use(`${config.API_ROOT}/api`, swagger.serve, swagger.setup(docs));
+app.use(synonyms);
+app.use('/engine', engine);
+app.use('/api', swaggerUI.serve, swaggerUI.setup(docs));
 
 /**
  * HTTPS Server Setup and Config

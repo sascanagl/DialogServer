@@ -23,8 +23,4 @@ config.ACCESS_LOG_ON_REQUEST = true;
 config.AWS_CREDENTIALS_PATH = '';
 config.AWS_CREDENTIALS_FILE = '';
 
-// Define the root API endpoint and child endpoints
-config.API_ROOT = "/engine";
-config.API_ABOUT = "/about";
-
 module.exports = config;
