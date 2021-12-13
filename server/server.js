@@ -27,5 +27,5 @@ app.use(config.ENGINE_ROOT, synonyms);
  * HTTPS Server Setup and Config
  */
 https.createServer(config.HTTPS_OPTIONS, app).listen(config.HTTPS_PORT, () =>{
-    console.log(config.API_NAME +` listening securely on port ${config.HTTPS_PORT}`);
+    console.log(config.ENGINE_NAME +` listening securely on port ${config.HTTPS_PORT}`);
 });

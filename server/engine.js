@@ -9,7 +9,7 @@ const config = require("../config");
  * simple /about endpoint
  */
 engine.get('/about', function(req,res) {
-    var msg = `Welcome to ${config.API_NAME} version ${config.VERSION}`;
+    var msg = `Welcome to ${config.ENGINE_NAME} version ${config.VERSION}`;
     res.writeHead(200, {
         'Content-Length': Buffer.byteLength(msg),
         'Content-Type' : 'text/plain' })

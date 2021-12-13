@@ -1,9 +1,11 @@
+const config = require('../../config');
+
 module.exports = {
     openapi: "3.0.3",
     info: {
-        title:"Dialog Server API",
+        title:config.ENGINE_NAME,
         description: "Dialog Engine Server Mid-tier",
-        version: "0.0.2",
+        version: config.VERSION,
         contact: {
             name: "Carl Nagle",
             email: "carl.nagle@cjncreations.com"

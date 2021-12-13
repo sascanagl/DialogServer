@@ -1,11 +1,11 @@
-// ./config_runtime.js
-
+// ./config.js
 const fs = require('fs');
 
 const config = {};
 
-config.VERSION = "0.0.1";
-config.API_NAME =  process.env.DIALOG_API_NAME || "Test Dialog Engine";
+config.VERSION = process.env.npm_package_version || $npm_package_version || "n.n.n";
+
+config.ENGINE_NAME =  process.env.DIALOG_ENGINE_NAME || "Test Dialog Engine";
 
 config.ENGINE_ROOT = "/engine";
 config.HTTPS_PORT = process.env.DIALOG_HTTPS_PORT       || 3000;
