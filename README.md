@@ -1,11 +1,13 @@
 # Dialog Server
 
-The Dialog Server is intended to take the original standalone Node/React Dialog Engine into separate Node midtier and React projects.  This is being done for multiple reasons:
+The Dialog Server is intended to take the original standalone Node/React Dialog Engine into separate Node mid-tier and React UI projects.  
+
+This is being done for multiple reasons:
 
 - optimize resource utilization across paid services like:
     - AWS Polly -- dynamic speech generation
     - AWS S3 -- paid/persisting storage, if needed
-- protect credentials required to use external paid services
+- protect credentials and other assets required to use external paid services
 
 
 ## Configurable
@@ -28,16 +30,16 @@ cd to the DialogServer root project directory
 
 ### Might have to:
 
-> * npm install  (again to update package-lock.json -- if needed)
+> * npm install 
 
 Otherwise, make sure the npm dependencies of the server are installed for the project.
 
 
 ### Enable HTTPS certificate
 
-The server requires a valid site certificate.  It can be a self-signed certificate, but that is only recommended for local development.
+The server requires a valid site certificate.  It can be a self-signed certificate, but that is only for local development.
 
-Provide the paths to your specific ***`key.pem`*** and ***`cert.pem`*** in the `config.js` file as shown in the snippet below:
+Provide the paths to your specific `key.pem` and `cert.pem` in the `config.js` file as shown in the snippet below:
 
 ```
 config.HTTPS_OPTIONS = process.env.DIALOG_HTTPS_OPTIONS || {
@@ -47,16 +49,17 @@ config.HTTPS_OPTIONS = process.env.DIALOG_HTTPS_OPTIONS || {
 ```
 As shown above and set by default, this specifies the files are located in the root directory of the project and are named `key.pem' and 'cert.pem'.
 
-Of course, the files can be located and named as needed as long as they are reachable at runtime.
+The files can be located and named as needed--as long as they are reachable at runtime.
 
 
 ### Run the Server
 
-> * npm start  (confirm basic app runs)
+> * npm start
 or
 > * node server/server.js
 
-###  Connect with clients
+
+### Connect with clients
 
 The default configuration runs a HTTPS server on PORT 3000
 
@@ -73,7 +76,7 @@ Then Swagger UI should be at:
 > ```https://localhost:3000/engine/api```
 
 
-### Review the Node code
+### The Code
 
 The server code is stored in the ```./server/``` directory:
 
@@ -81,7 +84,7 @@ The server code is stored in the ```./server/``` directory:
 - ```logger.js``` - configures the Morgan access log for the file system.
 - ```engine.js``` - configures the API Express Router endpoints for the server.
 
-The server Swagger JSON is stored in the ```./server/docs/``` directory.
+The server Swagger JSON is stored in the ```./server/docs/``` directory and subdirectories.
 
 
 ### Server Access Logs

@@ -19,9 +19,9 @@ app.use(logger);
 /**
  * Route /engine/ REST Api calls to the engine Router
  */
-app.use(synonyms);
-app.use('/engine', engine);
-app.use('/api', swaggerUI.serve, swaggerUI.setup(docs));
+app.use(config.ENGINE_ROOT, engine);
+app.use(`${config.ENGINE_ROOT}/api`, swaggerUI.serve, swaggerUI.setup(docs));
+app.use(config.ENGINE_ROOT, synonyms);
 
 /**
  * HTTPS Server Setup and Config

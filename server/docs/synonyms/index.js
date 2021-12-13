@@ -1,4 +1,4 @@
-const getSynonymsKeys = require('./get-synonyms');
+const getSynonymsKeys = require('./get-synonymsKeys');
 const getSynonym = require('./get-synonym');
 const getSynonymsList = require('./get-synonymsList');
 
