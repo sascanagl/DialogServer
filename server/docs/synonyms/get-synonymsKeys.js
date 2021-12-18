@@ -4,17 +4,6 @@ module.exports = {
         description: "Get Synonyms keys",
         operationId: "getSynonymsKeys",
         parameters: [],
-        responses:{
-            200:{
-                description: "Synonyms keys returned",
-                content:{
-                    "application/json":{
-                        schema:{
-                            $ref: "#/components/schemas/synonymsKeys"
-                        }
-                    }
-                }
-            }
-        }
+        responses:{ 200:{ $ref: "#/components/responses/mapKeysResponse" }}
     }
 }

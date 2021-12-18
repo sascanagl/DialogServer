@@ -55,6 +55,12 @@ const synonyms = new Map([
 
 class SynonymMap{
 
+    constructor() {
+      this.capFirst = this.capFirst.bind(this);
+      this.getSynonym = this.getSynonym.bind(this);
+      this.getSynonymsList = this.getSynonymsList.bind(this);
+    }
+
     /**
      * Prefix flag to indicate the returned synonym from getSynonym() should be capitalized. \
      * Example:
@@ -62,7 +68,8 @@ class SynonymMap{
      */
     static ucS = "uc:"; // flag: upCase first letter of returned synonym
 
-    static capFirst(key){
+    // normally called internally only
+    capFirst(key){
         return key.charAt(0).toUpperCase() + key.slice(1);
     }
 
@@ -75,7 +82,7 @@ class SynonymMap{
      * uc:n:strWord - means to get the specific index (pronoun) and upCase the first letter.
      * @return string 
      */
-    static getSynonym(strWord){
+    getSynonym(strWord){
       // initialize response to be 'no change'
       const json = { key: strWord, synonym: strWord };
       if(strWord != null && strWord.length > 0){
@@ -99,13 +106,13 @@ class SynonymMap{
                 str = objSynonym.getSynonym();
             }
             if(str != null && str.length > 0){
-                json.synonym = ucBool ? SynonymMap.capFirst(str) : str;
+                json.synonym = ucBool ? this.capFirst(str) : str;
                 return json;
             }
             if(person == 3)
                 key = key +"'s"; // 3rd person possessive
         }
-        json.synonym = ucBool ? SynonymMap.capFirst(key) : key;
+        json.synonym = ucBool ? this.capFirst(key) : key;
       }
       return json;
     }
@@ -114,17 +121,17 @@ class SynonymMap{
      * @return JSON: the list of synonyms/pronouns for the provided key. \
      * The count represents the count of synonyms stored with that key.
      */
-     static getSynonymsList(strWord){
-       const list = synonyms.get(strWord.toLowerCase()).getSynonyms();
-      return {
-          key: strWord,
-          count: list.length,
-          synonyms: list
-      }
+    getSynonymsList(strWord){
+        const list = synonyms.get(strWord.toLowerCase()).getSynonyms();
+        return {
+           key: strWord,
+           count: list.length,
+           synonyms: list
+        }
     }
 
     /**
-     * @return JSON: object containing count of keys and key names. \
+     * @return JSON: object containing count of keys and key names.
      */
     static getSynonymKeys(){
       return {

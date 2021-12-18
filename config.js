@@ -24,5 +24,4 @@ config.ACCESS_LOG_ON_REQUEST = true;
 config.AWS_CREDENTIALS_PATH = '';
 config.AWS_CREDENTIALS_FILE = '';
 
-
 module.exports = config;

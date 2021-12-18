@@ -32,17 +32,19 @@ synonyms.get('/synonyms', function(req,res) {
 synonyms.get('/synonym/:key', function(req,res) {
     var key = req.params.key || "";
     if(key.length == 0){
-        res.sendStatus(400);
-        return res.send( JSON.stringify({
+        res.sendStatus(400, {
+            'Content-Type' : 'application/json' 
+        })
+        .end( JSON.stringify({
             message: "Synonym cannot be found",
             internal_code: "Invalid key"
         }));
     }
-    var json = JSON.stringify(SynonymMap.getSynonym(key));
+    var json = JSON.stringify(new SynonymMap().getSynonym(key));
     res.writeHead(200, {
         'Content-Length': Buffer.byteLength(json),
-        'Content-Type' : 'application/json' })
-        .end(json);
+        'Content-Type' : 'application/json' 
+    }).end(json);
 });
 
 /*
@@ -53,17 +55,18 @@ synonyms.get('/synonym/:key', function(req,res) {
 synonyms.get('/synonyms/:key', function(req,res) {
     var key = req.params.key || "";
     if(key.length == 0){
-        res.sendStatus(400);
-        return res.send( JSON.stringify({
+        res.sendStatus(400, {
+            'Content-Type' : 'application/json' 
+        }).end( JSON.stringify({
             message: "Synonyms cannot be found",
             internal_code: "Invalid key"
         }));
     }
-    var json = JSON.stringify(SynonymMap.getSynonymsList(key));
+    var json = JSON.stringify(new SynonymMap().getSynonymsList(key));
     res.writeHead(200, {
         'Content-Length': Buffer.byteLength(json),
-        'Content-Type' : 'application/json' })
-        .end(json);
+        'Content-Type' : 'application/json' 
+    }).end(json);
 });
 
 module.exports = synonyms;

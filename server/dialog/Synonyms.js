@@ -12,6 +12,8 @@ class Synonyms {
         this.synonyms = arrSynonyms;
         this.lastUsed = -1;
         this.getSynonym = this.getSynonym.bind(this);
+        this.getSynonyms = this.getSynonyms.bind(this);
+        this.getPronoun = this.getPronoun.bind(this);
     }
 
     /**

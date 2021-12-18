@@ -9,6 +9,6 @@ module.exports = {
         contact: {
             name: "Carl Nagle",
             email: "carl.nagle@cjncreations.com"
-        },
-    },
+        }
+    }
 };

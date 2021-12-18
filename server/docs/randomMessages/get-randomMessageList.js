@@ -1,8 +1,8 @@
 module.exports = {
     get:{
-        tags: ["Synonyms"],
-        description: "Get synonyms for key",
-        operationId: "getSynonymsList",
+        tags: ["RandomMessages"],
+        description: "Get list of message ids for a random message key",
+        operationId: "getRandomMessageList",
         parameters: [{ $ref: "#/components/parameters/keyIdParam" }],
         responses:{
             200:{ $ref: "#/components/responses/mapListResponse" },
