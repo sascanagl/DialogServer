@@ -8,6 +8,7 @@ const swaggerUI = require("swagger-ui-express");
 const docs = require('./docs/index');
 
 const engine = require("./engine");
+const chainedMessages = require("./chainedMessages");
 const randomMessages = require("./randomMessages");
 const messages = require("./messages");
 const synonyms = require("./synonyms");
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.use(config.ENGINE_ROOT, engine);
 app.use(`${config.ENGINE_ROOT}/api`, swaggerUI.serve, swaggerUI.setup(docs));
+app.use(config.ENGINE_ROOT, chainedMessages);
 app.use(config.ENGINE_ROOT, randomMessages);
 app.use(config.ENGINE_ROOT, messages);
 app.use(config.ENGINE_ROOT, synonyms);

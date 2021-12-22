@@ -9,6 +9,9 @@ const getRandomMessageKeys = require('./randomMessages/get-randomMessageKeys');
 const getRandomMessage     = require('./randomMessages/get-randomMessage');
 const getRandomMessageList = require('./randomMessages/get-randomMessageList');
 
+const getChainedMessageKeys = require('./chainedMessages/get-chainedMessageKeys');
+const getChainedMessage     = require('./chainedMessages/get-chainedMessage');
+
 module.exports = {
     paths: {
         '/synonyms'      :{ ...getSynonymsKeys },
@@ -20,6 +23,9 @@ module.exports = {
 
         '/randomMessages'      :{ ...getRandomMessageKeys },
         '/randomMessage/{key}' :{ ...getRandomMessage },
-        '/randomMessages/{key}':{ ...getRandomMessageList }
+        '/randomMessages/{key}':{ ...getRandomMessageList },
+
+        '/chainedMessages'     :{ ...getChainedMessageKeys },
+        '/chainedMessage/{key}':{ ...getChainedMessage }
     }
 }

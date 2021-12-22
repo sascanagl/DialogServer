@@ -538,11 +538,11 @@ class MessageMap{
         this.synonymMap = props.synMap ?? new SynonymMap();
     }
 
-    static log(msg){  console.log(msg);  }
+static log(msg){  /* console.log(msg); */ }
 
     // called internally only
     replaceSynonyms( message){
-        let val = null;
+        let val = {};
         let mMsg = new MarkedMessage(message, 0, sS);
         while(mMsg.hasMark && mMsg.hasKey()){
             val = this.synonymMap.getSynonym(mMsg.key); // get a synonym { key:, synonym: }
@@ -553,7 +553,7 @@ class MessageMap{
 
     // called internally only
     replaceProperties( message, obj, sMark ){
-        let val = null;
+        let val = {};
         let mMsg = new MarkedMessage(message, 0, sMark);
         while(mMsg.hasMark && mMsg.hasKey()){
             val = obj[mMsg.key] ?? null; // get the property { property: , value: }
@@ -570,7 +570,7 @@ class MessageMap{
      * @return JSON: object containing the original msgKey and the processed message template.
      */
     getMessage(msgKey, gameState){
-        var message = String(messages.get(msgKey) ?? msgKey);
+        let message = String(messages.get(msgKey) ?? msgKey);
         MessageMap.log(`processing synonyms...`);
         message = this.replaceSynonyms(message);
         if(gameState.player){

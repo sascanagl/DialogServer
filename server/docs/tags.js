@@ -2,6 +2,7 @@ module.exports = {
     tags: [
         { name: "Synonyms" },
         { name: "Messages" },
-        { name: "RandomMessages" }
+        { name: "RandomMessages" },
+        { name: "ChainedMessages" }
     ]
 }

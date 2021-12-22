@@ -1,5 +1,5 @@
-// ./server/messages.js - api for messages
-// api_path - /engine/messages
+// ./server/randomMessages.js - api for random messages
+// api_path - /engine/randomMessages
 
 const express = require("express");
 const randomMessages = express.Router();

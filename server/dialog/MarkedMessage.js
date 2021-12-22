@@ -1,13 +1,3 @@
-const SynonymMap       = require("./SynonymMap");
-const MessageMap       = require("./MessageMap");
-const RandomMessageMap = require("./RandomMessageMap");
-
-// marker = new MarkedMessage(message, startIndex, sMark);
-// if/while( marker.hasMark ) { 
-//    val = getValueFromSomewhere( marker.key ); 
-//    marker.replaceMark( val );  // new message, indices, key=null
-// }
-
 const eB  = "}";   // end brace
 
 class MarkedMessage {
@@ -25,7 +15,7 @@ class MarkedMessage {
         this.replaceMark = this.replaceMark.bind(this);
     }
 
-static logIt(msg){ /* console.log("MarkedMessage: "+ msg); */ }
+    static logIt(msg){ /* console.log("MarkedMessage: "+ msg); */ }
 
     hasKey(){
         this.key = null;

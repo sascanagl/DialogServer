@@ -39,6 +39,13 @@ module.exports = {
                 schema: { $ref: "#/components/schemas/strKey" },
                 required: true,
                 description: "The key/id for the desired item"
+            },
+            newlinesParam: {
+                name: "newlines",
+                in: "query",
+                schema: { $ref: "#/components/schemas/boolVal" },
+                required: false,
+                description: "Place newlines between chained messages"
             }
         },
         requestBodies: {
@@ -57,6 +64,20 @@ module.exports = {
                 type: "string",
                 description: "A string Map key",
                 example:"rootWord"
+            },
+            boolVal: {
+                type: "boolean",
+                description: "Query param true/false",
+                examples:{
+                    "unset": {
+                        value: "?param",
+                        summary: "No value defaults to boolean true"
+                    },
+                    "set": {
+                        value: "?param=false",
+                        summary: "Set to false to avoid default of true"
+                    }
+                }
             },
             mapKeys:{
                 type: "object",

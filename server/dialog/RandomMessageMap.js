@@ -17,10 +17,15 @@ class RandomMessageMap{
       this.messageMap = props.msgMap ?? new MessageMap();
     }
 
-    static log(msg){ console.log("RandomMessageMap: "+ msg);  }
+    static log(msg){ /* console.log("RandomMessageMap: "+ msg); */ }
 
-    // it is possible the strWord has no synonyms
-    getRandomMessage(strKey, gameState){
+    /**
+     * Get a random message from the list using the provided strKey.
+     * @param strKey - String: id of set of related messages.
+     * @param gameState - JSON: object containing player and location objects from gameState.
+     * @return String: message or single space.
+     */
+     getRandomMessage(strKey, gameState){
       let message;
       if(strKey != null && strKey.length > 0){
         let lckey = strKey.toLowerCase();

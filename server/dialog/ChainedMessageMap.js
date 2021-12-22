@@ -24,35 +24,40 @@ class ChainedMessageMap{
         this.replaceRandomMessages = this.replaceRandomMessages.bind(this);
         this.getChainedMessages = this.getChainedMessages.bind(this);
         this.synonymMap = new SynonymMap();
-        this.messageMap = new MessageMap({synMap: synonymMap});
-        this.randomMap = new RandomMessageMap({msgMap: messageMap});
+        this.messageMap = new MessageMap({synMap: this.synonymMap});
+        this.randomMap = new RandomMessageMap({msgMap: this.messageMap});
     }
 
     static log(msg){ /* console.log("ChainedMessageMap: "+ msg); */ }
 
     // called internally only
     replaceSynonyms( message){
-        let val = null;
+        let val = {};
         let mMsg = new MarkedMessage(message, 0, sS);
         while(mMsg.hasMark && mMsg.hasKey()){
-            val = this.synonymMap.getSynonym(mMsg.key.toLowerCase()); // get a synonym
-            mMsg.replaceMark(val);
+            val = this.synonymMap.getSynonym(mMsg.key.toLowerCase()); // get a synonym { key: , synonym: }
+            mMsg.replaceMark(val.synonym);
         }
         return mMsg.message;
     }
 
     // called internally only
     replaceMessages( message, gameState){
-        let val = null;
+        let val = {};
         let mMsg = new MarkedMessage(message, 0, mS);
         while(mMsg.hasMark && mMsg.hasKey()){
-            val = this.messageMap.getMessage(mMsg.key, gameState);
-            mMsg.replaceMark(val);
+            val = this.messageMap.getMessage(mMsg.key, gameState);  // { key: , message: }
+            mMsg.replaceMark(val.message);
         }
         return mMsg.message;
     }
 
     // called internally only
+    /**
+     * @param message String: message template
+     * @param gameState - JSON: gameState containing data to insert into templates.
+     * @return String: processed message
+     */
     replaceRandomMessages( message, gameState){
         let val = null;
         let mMsg = new MarkedMessage(message, 0, rS);
@@ -69,16 +74,18 @@ class ChainedMessageMap{
      * @param msgKey - string - key of message chain to process.
      * @param gameState - JSON: gameState containing data to insert into templates.
      * @param linefeeds - boolean: true/false to add linefeeds between stages of processing.
+     * @return JSON: Object with key: and message:
      */
     getChainedMessages(msgKey, gameState, linefeeds){
         let phrase = String(chains.get(msgKey));
+        //console.log("insert linefeeds = "+ linefeeds);
         if(phrase != null && phrase.length > 0){
-            phrase = this.replaceSynonyms(phrase); 
-            if(linefeeds===true && phrase != null) phrase += "\n";
+            phrase = this.replaceSynonyms(phrase);
+            if(linefeeds && phrase != null) phrase += "\n";  // might check to add \n ONLY if length changed!
             phrase = this.replaceMessages(phrase, gameState);
-            if(linefeeds===true && phrase != null) phrase += "\n";
+            if(linefeeds && phrase != null) phrase += "\n";  // might check to add \n ONLY if length changed!
             phrase = this.replaceRandomMessages(phrase, gameState);
-            if(linefeeds===true && phrase != null) phrase += "\n";
+            if(linefeeds && phrase != null) phrase += "\n";  // might check to add \n ONLY if length changed!
         }else{
             phrase = "Hmm...";
         }
@@ -98,4 +105,4 @@ class ChainedMessageMap{
       }
     }
 }
-modules.export = ChainedMessageMap;
+module.exports = ChainedMessageMap;
