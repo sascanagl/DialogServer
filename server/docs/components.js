@@ -46,6 +46,13 @@ module.exports = {
                 schema: { $ref: "#/components/schemas/boolVal" },
                 required: false,
                 description: "Place newlines between chained messages"
+            },
+            voiceParam: {
+                name: "voice",
+                in: "query",
+                schema: { $ref: "#/components/schemas/voiceKey" },
+                required: false,
+                description: "The AWS Polly voice to use for TTS"
             }
         },
         requestBodies: {
@@ -62,8 +69,46 @@ module.exports = {
         schemas:{
             strKey: {
                 type: "string",
-                description: "A string Map key",
+                description: "Path Param: A string Map key",
                 example:"rootWord"
+            },
+            voiceKey: {
+                type: "string",
+                description: "Query Param providing the Polly voice to use for TTS",
+                examples:{
+                    "Ivy": {
+                        value: "?param=Ivy",
+                        summary: "Female child"
+                    },
+                    "Joanna": {
+                        value: "?param=Joanna",
+                        summary: "Female"
+                    },
+                    "Kendra": {
+                        value: "?param=Kendra",
+                        summary: "Female"
+                    },
+                    "Kimberly": {
+                        value: "?param=Kimberly",
+                        summary: "Female"
+                    },
+                    "Salli": {
+                        value: "?param=Salli",
+                        summary: "Female"
+                    },
+                    "Joey": {
+                        value: "?param=Joey",
+                        summary: "Male"
+                    },
+                    "Justin": {
+                        value: "?param=Justin",
+                        summary: "Male child"
+                    },
+                    "Matthew": {
+                        value: "?param=Matthew",
+                        summary: "Male"
+                    }
+                }
             },
             boolVal: {
                 type: "boolean",
@@ -102,10 +147,50 @@ module.exports = {
                         description: "Original key from request",
                         example: "big"
                     },
-                    value: {
+                    message: {
                         type: "string",
                         description: "String value from call",
                         example: "large"
+                    }
+                }
+            },
+            mapStrTTSValue:{
+                type: "object",
+                properties:{
+                    key: {
+                        type: "string",
+                        description: "Original key from request",
+                        example: "big"
+                    },
+                    message: {
+                        type: "string",
+                        description: "String value from call",
+                        example: "large"
+                    },
+                    speechUrl: {
+                        type: "string",
+                        description:"Signed AWS audio file Url from AWS Polly call",
+                        example: "A REALLY REALLY REALLY long signed HTTP Url for playable/loadable audio file"
+                    }
+                }
+            },
+            mapStrTTSError:{
+                type: "object",
+                properties:{
+                    key: {
+                        type: "string",
+                        description: "Original key from request",
+                        example: "big"
+                    },
+                    message: {
+                        type: "string",
+                        description: "String value from call",
+                        example: "large"
+                    },
+                    speechError: {
+                        type: "string",
+                        description:"Error message from the AWS Polly call.",
+                        example: "Your IdentityPool Id was empty"
                     }
                 }
             },

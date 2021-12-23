@@ -15,6 +15,24 @@ const { getSynthesizeSpeechUrl } = require("@aws-sdk/polly-request-presigner");
 // EN-AU: Nicole, Russel
 // EN-IN: Aditi, Raveena
 // EN-US: Ivy, Joanna, Kendra, Kimberly, Salli, Joey, Justin, Matthew
+const voices = new Map([
+    ["Aditi"   , undefined],
+    ["Amy"     , undefined],
+    ["Brian"   , undefined],
+    ["Emma"    , undefined],
+    ["Geraint" , undefined],
+    ["Ivy"     , undefined],
+    ["Joanna"  , undefined],
+    ["Joey"    , undefined],
+    ["Justin"  , undefined],
+    ["Kendra"  , undefined],
+    ["Kimberly", undefined],
+    ["Matthew" , undefined],
+    ["Nicole"  , undefined],
+    ["Raveena" , undefined],
+    ["Russell" , undefined],
+    ["Salli"   , undefined]
+]);
 
 class AWS_Polly {
 
@@ -47,6 +65,29 @@ class AWS_Polly {
         });
         this.getSpeechUrl = this.getSpeechUrl.bind(this);
         this.addSpeechUrlResponse = this.addSpeechUrlResponse.bind(this);
+    }
+
+    /**
+     * Get the voice instance for the voice id specified.
+     * @param string voice 
+     * @return AWS_Polly client for the voice requested
+     * @throws Exception if invalid voice id specified
+     */
+    static getVoice(voice){
+        var voicelc = voice.toLowerCase();
+        var keylc;
+        for(var key of voices.keys()){
+            keylc = key.toLowerCase();
+            if (voicelc === keylc){
+                var polly = voices.get(key);
+                if(polly) return polly;
+                console.log(key +" is instantiating...");
+                polly = new AWS_Polly({VoiceId: key});
+                voices.set(key, polly);
+                return polly;
+            }
+        }
+        throw new Error("Invalid voice id: "+ voice);
     }
 
     static isEnabled(){

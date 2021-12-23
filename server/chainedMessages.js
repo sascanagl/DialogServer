@@ -7,8 +7,6 @@ const chainedMessages = express.Router();
 const ChainedMessageMap = require("./dialog/ChainedMessageMap");
 const AWS_Polly = require("./dialog/AWS_Polly");
 
-// poc with a predefined voice. future support which voice as a request query param.
-const joanna = new AWS_Polly({ VoiceId: "Joanna" });
 /*
  * chainedmessages endpoint to GET the collection of message keys in storage.
  * @return JSON: { "count": N, "keys": [strings...] }
@@ -36,8 +34,8 @@ chainedMessages.post('/chainedMessage/:key', function(req,res) {
     if(req.query.newlines){
         linefeeds = (req.query.newlines === "false") ? false: true;
     }
-    console.log("GameState:");
-    console.log(req.body);
+    //console.log("GameState:");
+    //console.log(req.body);
     if(key.length == 0){
         res.writeHead(400, {
             'Content-Type' : 'application/json'
@@ -49,9 +47,17 @@ chainedMessages.post('/chainedMessage/:key', function(req,res) {
     if(req.body){
         var gameState = req.body;
         var jsonObj = new ChainedMessageMap().getChainedMessages(key, gameState, linefeeds);
-        if (AWS_Polly.isEnabled() &&
-            jsonObj.message && jsonObj.message.length > 0){
-               joanna.addSpeechUrlResponse(jsonObj, res, req);
+        var voice;
+        if(req.query.voice && req.query.voice.length > 0){
+            try{
+                voice = AWS_Polly.getVoice(req.query.voice);
+            }catch(err){
+                console.log("Error retrieving "+ req.query.voice +": "+ err.message);
+                jsonObj.speechError = err.message;
+            }
+        }
+        if (voice && jsonObj.message && jsonObj.message.length > 0){
+            voice.addSpeechUrlResponse(jsonObj, res, req);
         }else{
             var json = JSON.stringify(jsonObj);
             res.writeHead(200, {
