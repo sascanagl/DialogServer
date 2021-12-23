@@ -1,6 +1,6 @@
 {
   "name": "dialogserver",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -12,7 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.32.0",
+    "@aws-sdk/client-polly": "^3.32.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.32.0",
+    "@aws-sdk/node-http-handler": "^3.32.0",
+    "@aws-sdk/polly-request-presigner": "^3.32.0",
+    "@aws-sdk/types": "^3.32.0",
+    "aws-sdk": "^2.1048.0",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",

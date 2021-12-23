@@ -1,5 +1,7 @@
 // ./server/server.js
 
+require('dotenv').config();
+
 const config = require("../config");
 
 const http = require("http"), https= require("https"), express = require("express");

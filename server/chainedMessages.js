@@ -1,10 +1,14 @@
 // ./server/chainedMessages.js - api for chained messages
 // api_path - /engine/chainedMessages
 
+//const config = require("../config");
 const express = require("express");
 const chainedMessages = express.Router();
 const ChainedMessageMap = require("./dialog/ChainedMessageMap");
+const AWS_Polly = require("./dialog/AWS_Polly");
 
+// poc with a predefined voice. future support which voice as a request query param.
+const joanna = new AWS_Polly({ VoiceId: "Joanna" });
 /*
  * chainedmessages endpoint to GET the collection of message keys in storage.
  * @return JSON: { "count": N, "keys": [strings...] }
@@ -13,7 +17,7 @@ chainedMessages.get('/chainedMessages', function(req,res) {
     var json = JSON.stringify(ChainedMessageMap.getChainedMessageKeys());
     res.writeHead(200, {
         'Content-Length': Buffer.byteLength(json),
-        'Content-Type' : 'application/json' 
+        'Content-Type' : 'application/json'
     })
     .end(json);
 });
@@ -44,15 +48,23 @@ chainedMessages.post('/chainedMessage/:key', function(req,res) {
     }
     if(req.body){
         var gameState = req.body;
-        var json = JSON.stringify(new ChainedMessageMap().getChainedMessages(key, gameState, linefeeds));
-        res.writeHead(200, {
-            'Content-Length': Buffer.byteLength(json),
-            'Content-Type' : 'application/json'
-        }).end(json);
+        var jsonObj = new ChainedMessageMap().getChainedMessages(key, gameState, linefeeds);
+        if (AWS_Polly.isEnabled() &&
+            jsonObj.message && jsonObj.message.length > 0){
+               joanna.addSpeechUrlResponse(jsonObj, res, req);
+        }else{
+            var json = JSON.stringify(jsonObj);
+            res.writeHead(200, {
+                'Content-Length': Buffer.byteLength(json),
+                'Content-Type' : 'application/json'
+            })
+            .end(json);
+        }
     }else{
         res.writeHead(400, {
-            'Content-Type' : 'application/json' 
-        }).end( JSON.stringify({
+            'Content-Type' : 'application/json'
+        })
+        .end( JSON.stringify({
             message: "Message cannot be processed",
             internal_code: "Invalid gameState body"
         }));
