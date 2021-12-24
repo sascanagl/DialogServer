@@ -148,7 +148,7 @@ class AWS_Polly {
         .catch(err => {
             console.log(err);
             // polly error, but our original text message is still valid
-            jsonObj.speechError = err.message;
+            jsonObj.speechError = "AWS Polly client configuration is bad or the AWS service is not available";
             http_serve.respondApplicationJson(200, jsonObj, response, request);
         })
     }
