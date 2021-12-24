@@ -214,6 +214,56 @@ module.exports = {
                     }
                 }
             },
+            mapListTTSValue:{
+                type: "object",
+                properties:{
+                    key: {
+                        type: "string",
+                        description: "String key from the request",
+                        example: "big"
+                    },
+                    count: {
+                        type: "number",
+                        description: "Total number of items in the list",
+                        example: 2
+                    },
+                    values: {
+                        type: "array",
+                        description: "String list stored for the key",
+                        example: [ "large", "huge" ]
+                    },
+                    speechUrl: {
+                        type: "string",
+                        description:"Signed AWS audio file Url from AWS Polly call",
+                        example: "A REALLY REALLY REALLY long signed HTTP Url for playable/loadable audio file"
+                    }
+                }
+            },
+            mapListTTSError:{
+                type: "object",
+                properties:{
+                    key: {
+                        type: "string",
+                        description: "String key from the request",
+                        example: "big"
+                    },
+                    count: {
+                        type: "number",
+                        description: "Total number of items in the list",
+                        example: 2
+                    },
+                    values: {
+                        type: "array",
+                        description: "String list stored for the key",
+                        example: [ "large", "huge" ]
+                    },
+                    speechError: {
+                        type: "string",
+                        description:"Error message from the AWS Polly call.",
+                        example: "Your IdentityPool Id was empty"
+                    }
+                }
+            },
             gameState: {
                 type: "object",
                 properties: {

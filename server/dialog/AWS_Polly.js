@@ -103,12 +103,12 @@ class AWS_Polly {
      * @return Promise - string Url
      */
     async getSpeechUrl(text){
-        // future: may have to redact the text of \n and other non-speech text
+        // \n in text seems to be OK. treated as a pause! :)  I love it!
         this.voice_parms.Text = text;
         return await getSynthesizeSpeechUrl({
             client: this.polly,
             params: this.voice_parms
-        }, config.AWS_POLLY_TIMEOUT);  // 4 second timeout?  Default is normally 3600 (1 hour)
+        }, config.AWS_POLLY_TIMEOUT);
     }
 
     /**
@@ -122,8 +122,8 @@ class AWS_Polly {
      * OR { "key": string, "message": string, "speechError": string }
      */
     addSpeechUrlResponse(jsonObj, response, request){
-        if(! isEnabled() ){
-            jsonObj.speechError = "We currently have no larynx";
+        if(! AWS_Polly.isEnabled() ){
+            jsonObj.speechError = `${this.voice_parms.VoiceId} currently has no larynx`;
             http_serve.respondApplicationJson(200, jsonObj, response, request);
             return;
         }
@@ -135,8 +135,8 @@ class AWS_Polly {
         }else if (jsonObj.synonyms){
             text = jsonObj.synonyms.join(',');
         }else{
-            console.log("We don't know what to say");
-            jsonObj.speechError = "We don't know what to say";
+            console.log("${this.voice_parms.VoiceId} doesn't know what to say");
+            jsonObj.speechError = "${this.voice_parms.VoiceId} don't know what to say";
             http_serve.respondApplicationJson(200, jsonObj, response, request);
             return;
         }

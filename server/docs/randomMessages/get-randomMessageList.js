@@ -6,7 +6,11 @@ module.exports = {
         parameters: [{ $ref: "#/components/parameters/keyIdParam" }],
         responses:{
             200:{ $ref: "#/components/responses/mapListResponse" },
-            400:{ $ref: "#/components/responses/ParamError" }
+            400:{
+                description:"JSON Object with a message and an internal error detail",
+                type: "object",
+                schema: { $ref: "#/components/schemas/Error" }
+            }
         }
     }
 }

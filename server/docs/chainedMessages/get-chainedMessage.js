@@ -14,7 +14,7 @@ module.exports = {
         ],
         requestBody: { $ref: "#/components/requestBodies/gameStateBody" },
         responses:{
-            200:{ 
+            200:{
                 description: "JSON Object with the key, message, and possible TTS speechUrl or speechError",
                 type: "object",
                 oneOf:[
@@ -22,7 +22,7 @@ module.exports = {
                 { $ref: "#/components/schemas/mapStrTTSValue" },
                 { $ref: "#/components/schemas/mapStrTTSError" }
             ]},
-            400:{ 
+            400:{
                 description:"JSON Object with a message and an internal error detail",
                 type: "object",
                 schema: { $ref: "#/components/schemas/Error" }

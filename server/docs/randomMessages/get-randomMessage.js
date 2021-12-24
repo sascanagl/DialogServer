@@ -5,16 +5,27 @@
 module.exports = {
     post:{
         tags: ["RandomMessages"],
-        description: "Get random message id for key",
+        description: "Get random message from those available for the key",
         operationId: "getRandomMessage",
-        parameters: [{ $ref: "#/components/parameters/keyIdParam" }],
+        parameters: [
+            { $ref: "#/components/parameters/keyIdParam" },
+            { $ref: "#/components/parameters/voiceParam" }
+        ],
         requestBody: { $ref: "#/components/requestBodies/gameStateBody" },
         responses:{
-            200:{ $ref: "#/components/responses/mapStrResponse" },
-            400:{ anyOf:[
-                    { $ref: "#/components/responses/ParamError" },
-                    { $ref: "#/components/responses/BodyError" }
-            ]}
+            200:{
+                description: "JSON Object with the key, message, and possible TTS speechUrl or speechError",
+                type: "object",
+                oneOf:[
+                { $ref: "#/components/schemas/mapStrValue" },
+                { $ref: "#/components/schemas/mapStrTTSValue" },
+                { $ref: "#/components/schemas/mapStrTTSError" }
+            ]},
+            400:{
+                description:"JSON Object with an error message and detail",
+                type: "object",
+                schema: { $ref: "#/components/schemas/Error" }
+            }
         }
     }
 }

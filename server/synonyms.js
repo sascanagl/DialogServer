@@ -4,6 +4,7 @@
 const express = require("express");
 const synonyms = express.Router();
 const SynonymMap = require("./dialog/SynonymMap");
+const AWS_Polly = require("./dialog/AWS_Polly");
 const http_serve = require("./http_serve");
 
 /*
