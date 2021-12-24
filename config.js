@@ -30,5 +30,6 @@ config.AWS_CREDENTIALS_PATH = process.env.DIALOG_AWS_CREDENTIALS_PATH || '';
 config.AWS_CREDENTIALS_FILE = process.env.DIALOG_AWS_CREDENTIALS_FILE || '';
 config.AWS_IDENTITY_POOL    = process.env.DIALOG_AWS_IDENTITY_POOL    || '';
 config.AWS_REGION           = process.env.DIALOG_AWS_REGION           || '';
+config.AWS_POLLY_TIMEOUT    = process.env.DIALOG_AWS_POLLY_TIMEOUT    ||  4;
 
 module.exports = config;

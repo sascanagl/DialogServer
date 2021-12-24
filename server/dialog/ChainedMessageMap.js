@@ -77,7 +77,7 @@ class ChainedMessageMap{
      * @return JSON: Object with key: and message:
      */
     getChainedMessages(msgKey, gameState, linefeeds){
-        let phrase = String(chains.get(msgKey));
+        let phrase = chains.get(msgKey);
         //console.log("insert linefeeds = "+ linefeeds);
         if(phrase != null && phrase.length > 0){
             phrase = this.replaceSynonyms(phrase);

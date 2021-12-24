@@ -538,7 +538,7 @@ class MessageMap{
         this.synonymMap = props.synMap ?? new SynonymMap();
     }
 
-static log(msg){  /* console.log(msg); */ }
+    static log(msg){  /* console.log(msg); */ }
 
     // called internally only
     replaceSynonyms( message){
@@ -568,6 +568,7 @@ static log(msg){  /* console.log(msg); */ }
      * @param msgKey - id of message template to process.
      * @param gameState - JSON: object containing player and location objects from gameState.
      * @return JSON: object containing the original msgKey and the processed message template.
+     * The processed message can be just the msgKey again if it was invalid.
      */
     getMessage(msgKey, gameState){
         let message = String(messages.get(msgKey) ?? msgKey);

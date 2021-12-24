@@ -1,5 +1,6 @@
 
 const config = require("../../config");
+const http_serve = require("../http_serve");
 
 const AWS_IdentityPool = config.AWS_IDENTITY_POOL;
 const AWS_REGION       = config.AWS_REGION;
@@ -47,7 +48,6 @@ class AWS_Polly {
         VoiceId: "Joanna"
     */
     constructor(props){
-        console.log("CREATING "+ props.VoiceId);
         this.voice_parms = {
             Engine:       props.Engine       ?? "standard",
             OutputFormat: props.OutputFormat ?? "mp3",
@@ -71,7 +71,7 @@ class AWS_Polly {
      * Get the voice instance for the voice id specified.
      * @param string voice 
      * @return AWS_Polly client for the voice requested
-     * @throws Exception if invalid voice id specified
+     * @throws Error if invalid voice id specified
      */
     static getVoice(voice){
         var voicelc = voice.toLowerCase();
@@ -81,13 +81,13 @@ class AWS_Polly {
             if (voicelc === keylc){
                 var polly = voices.get(key);
                 if(polly) return polly;
-                console.log(key +" is instantiating...");
+                console.log(`We are reviving ${key}...`);
                 polly = new AWS_Polly({VoiceId: key});
                 voices.set(key, polly);
                 return polly;
             }
         }
-        throw new Error("Invalid voice id: "+ voice);
+        throw new Error("We never met "+ voice);
     }
 
     static isEnabled(){
@@ -105,12 +105,10 @@ class AWS_Polly {
     async getSpeechUrl(text){
         // future: may have to redact the text of \n and other non-speech text
         this.voice_parms.Text = text;
-        // console.log(this.voice_parms) //;
-        // console.log(this.voice_parms.VoiceId +" speech requested at "+ new Date().toLocaleTimeString());
         return await getSynthesizeSpeechUrl({
             client: this.polly,
             params: this.voice_parms
-        }, 4);  // 4 second timeout?  Default is normally 3600 (1 hour)
+        }, config.AWS_POLLY_TIMEOUT);  // 4 second timeout?  Default is normally 3600 (1 hour)
     }
 
     /**
@@ -124,25 +122,34 @@ class AWS_Polly {
      * OR { "key": string, "message": string, "speechError": string }
      */
     addSpeechUrlResponse(jsonObj, response, request){
-        this.getSpeechUrl(jsonObj.message)
+        if(! isEnabled() ){
+            jsonObj.speechError = "We currently have no larynx";
+            http_serve.respondApplicationJson(200, jsonObj, response, request);
+            return;
+        }
+        var text;
+        if (jsonObj.message){
+            text = jsonObj.message;
+        }else if (jsonObj.synonym){
+            text = jsonObj.synonym;
+        }else if (jsonObj.synonyms){
+            text = jsonObj.synonyms.join(',');
+        }else{
+            console.log("We don't know what to say");
+            jsonObj.speechError = "We don't know what to say";
+            http_serve.respondApplicationJson(200, jsonObj, response, request);
+            return;
+        }
+        this.getSpeechUrl(text)
         .then ((speechUrl) => {
-            // console.log("speechUrl is "+ speechUrl);
             jsonObj.speechUrl = speechUrl;
-            var json = JSON.stringify(jsonObj);
-            response.writeHead(200, {
-                'Content-Length': Buffer.byteLength(json),
-                'Content-Type' : 'application/json'
-            }).end(json);
+            http_serve.respondApplicationJson(200, jsonObj, response, request);
         })
         .catch(err => {
             console.log(err);
             // polly error, but our original text message is still valid
             jsonObj.speechError = err.message;
-            var json = JSON.stringify(jsonObj);
-            response.writeHead(200, {
-                'Content-Length': Buffer.byteLength(json),
-                'Content-Type' : 'application/json'
-            }).end(json);
+            http_serve.respondApplicationJson(200, jsonObj, response, request);
         })
     }
 }

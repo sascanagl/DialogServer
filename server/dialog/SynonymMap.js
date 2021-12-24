@@ -80,7 +80,7 @@ class SynonymMap{
      * uc:strWord - means to upCase first letter before return. \
      * n:strWord - means to get the specific index instead of a random index (Pronouns). \
      * uc:n:strWord - means to get the specific index (pronoun) and upCase the first letter.
-     * @return string 
+     * @return string -- may be the original strWord provided
      */
     getSynonym(strWord){
       // initialize response to be 'no change'
@@ -120,9 +120,15 @@ class SynonymMap{
     /**
      * @return JSON: the list of synonyms/pronouns for the provided key. \
      * The count represents the count of synonyms stored with that key.
+     * An empty list is returned if the key is invalid.
      */
     getSynonymsList(strWord){
-        const list = synonyms.get(strWord.toLowerCase()).getSynonyms();
+        var list;
+        try{
+            list = synonyms.get(strWord.toLowerCase()).getSynonyms();
+        }catch(err){
+            list = [];
+        }
         return {
            key: strWord,
            count: list.length,

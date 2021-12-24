@@ -45,6 +45,7 @@ class Synonyms {
      * @return the pronoun or null--which means to use the originating noun.
      */
     getPronoun(index){
+      if(index > this.synonyms.length) return null; // avoid out of bounds index
       let i = Math.floor(Math.random() * 10);
        return (i > 4) ? this.synonyms[index-1] : null;
     }

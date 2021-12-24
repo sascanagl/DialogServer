@@ -23,21 +23,24 @@ class RandomMessageMap{
      * Get a random message from the list using the provided strKey.
      * @param strKey - String: id of set of related messages.
      * @param gameState - JSON: object containing player and location objects from gameState.
-     * @return String: message or single space.
+     * @return String: MessageMap object. The message may be the same as the strKey 
+     * if the strKey is invalid.
      */
      getRandomMessage(strKey, gameState){
-      let message;
+      let message = { key: strKey, message: " "};
       if(strKey != null && strKey.length > 0){
         let lckey = strKey.toLowerCase();
         let objSynonyms = messages.get(lckey);
-        let skey = objSynonyms.getSynonym();
-        if (skey != null && skey.length > 0) {
-          message = this.messageMap.getMessage(skey.toLowerCase(), gameState);
-        }else{
-          message = this.messageMap.getMessage(lckey, gameState);
+        if (objSynonyms){
+          let skey = objSynonyms.getSynonym();
+          if (skey != null && skey.length > 0) {
+            message = this.messageMap.getMessage(skey.toLowerCase(), gameState);
+          }else{
+            message = this.messageMap.getMessage(lckey, gameState);
+          }
         }
       }
-      return (message) ? message: " ";
+      return message;
     }
 
     /**
@@ -45,7 +48,12 @@ class RandomMessageMap{
      * The count represents the count of synonyms stored with that key.
      */
     getRandomMessageList(akey){
-        const list = messages.get(akey.toLowerCase()).getSynonyms();
+        var list;
+        try{ 
+          list = messages.get(akey.toLowerCase()).getSynonyms(); }
+        catch(err){ // handle invalid key
+          list = [];
+        }
         return {
             key: akey,
             count: list.length,
