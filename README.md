@@ -13,7 +13,7 @@ This is being done for multiple reasons:
 ## Configurable
 
 The Node server is intended to be totally configurable from a single ***`config.js`*** file.
-Sensitive data like authentication keys and passwords will be pulled in via a ***`.env`*** file in the project root directory.
+Sensitive data like authentication keys and passwords will be pulled in via a DOTENV ***`.env`*** file in the project root directory.
 
 
 ## Setup
@@ -89,6 +89,7 @@ Then Swagger UI should be at:
 
 The server code is stored in the ```./server/``` directory:
 
+- ```http_serve.js``` - shared http response code/library.
 - ```server.js``` - configures the Node Express server using ```config.js```and these below:
 - ```logger.js``` - configures the Morgan access log for the file system.
 - ```engine.js``` - configures the API Express Router endpoints for the server.
@@ -100,6 +101,7 @@ The server code is stored in the ```./server/``` directory:
 The server Swagger JSON is stored in the ```./server/docs/``` directory and subdirectories.
 
 The functional code for dialog messaging is stored in the ```./server/dialog/``` directory.
+This includes the ```AWS_Polly.js``` interface to Amazon's AWS Polly system.
 
 ### Server Access Logs
 
