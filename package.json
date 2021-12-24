@@ -1,6 +1,6 @@
 {
   "name": "dialogserver",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -12,19 +12,28 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.32.0",
+    "@aws-sdk/client-polly": "^3.32.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.32.0",
+    "@aws-sdk/node-http-handler": "^3.32.0",
+    "@aws-sdk/polly-request-presigner": "^3.32.0",
+    "@aws-sdk/types": "^3.32.0",
+    "aws-sdk": "^2.1048.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
+    "lowdb": "^1.0.0",
     "morgan": "^1.10.0",
+    "nanoid": "^3.1.22",
     "node-uuid": "^1.4.8",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rfs": "^9.0.6",
     "rotating-file-stream": "^3.0.2",
-
-    "cors": "^2.8.5",
-    "lowdb": "^1.0.0",
-    "nanoid": "^3.1.22",
-    "nodemon": "^2.0.7",
-    "swagger-ui-express": "^4.1.6"  
+    "swagger-ui-express": "^4.1.6"
   }
 }

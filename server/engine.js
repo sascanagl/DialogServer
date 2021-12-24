@@ -4,16 +4,16 @@
 const express = require("express");
 const engine = express.Router();
 const config = require("../config");
+const http_serve = require("./http_serve");
 
 /**
  * simple /about endpoint
  */
-engine.get(config.API_ABOUT, function(req,res) {
-    var msg = `Welcome to ${config.API_NAME} version ${config.VERSION}`;
-    res.writeHead(200, {
-        'Content-Length': Buffer.byteLength(msg),
-        'Content-Type' : 'text/plain' })
-        .end(msg);
+engine.get('/about', function(req,res) {
+    http_serve.responsTextPlain( 200
+        ,`Welcome to ${config.ENGINE_NAME} version ${config.VERSION}`
+        ,res ,req
+    );
 });
 
 module.exports = engine;
