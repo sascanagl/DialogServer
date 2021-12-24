@@ -60,6 +60,18 @@ AWS Polly is NOT required to use the Dialog Engine, but Polly adds significant i
 AWS Polly requires an appropriate AWS account and configuring your own AWS Cognito Identity Pool using your own ```aws_access_key``` and ```aws_secret_access_key```.
 This is free to setup and use within the boundaries of the AWS free account restrictions.
 
+If used, minimally required configuration in your System Environment or ```.env``` file:
+
+>DIALOG_AWS_POLLY_ENABLED=true \
+>DIALOG_AWS_IDENTITY_POOL=val \
+>DIALOG_AWS_REGION=val \
+>DIALOG_AWS_POLLY_TIMEOUT=n  (defaults to 4 seconds)
+
+Other ```.env``` values if not using defaults:
+
+>DIALOG_AWS_CREDENTIALS_PATH=directory \
+>DIALOG_AWS_CREDENTIALS_FILE=file
+
 
 ### Run the Server
 
