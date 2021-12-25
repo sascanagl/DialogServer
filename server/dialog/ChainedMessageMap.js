@@ -3,18 +3,13 @@ const MarkedMessage    = require("./MarkedMessage");
 const MessageMap       = require("./MessageMap");
 const RandomMessageMap = require("./RandomMessageMap");
 
+const {chains} = require("./data/ChainedMessageData");
+
 // Map value prefixes for the chained messages template
 const sS = "$s{"; // id for Synonyms item. Use $s{uc:id}, $s{n:id}, and $s{uc:n:id} as needed.
 const mS = "$m{"; // id for Messages item
 const rS = "$r{"; // id for RandomMessage item
 const cS = "$c{"; // id for ChainedMessage item
-
-const chains = new Map([
-
-    [ "party.init1", "$m{party.init1}\n$m{party.init5} $m{party.init10} $m{party.init15}"],
-    [ "party.init5", "$m{party.init20} $m{party.init25} $m{party.init30}"],
-    [ "outside.init1", "$m{outside.init1} $m{outside.init5}"]
-]);
 
 class ChainedMessageMap{
 
