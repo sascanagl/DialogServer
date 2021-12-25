@@ -54,7 +54,7 @@ syntax they support, if desired.
 
 > * ```$s{uc:key}``` - uc: means to UpCase the first character
 > * ```$s{n:key}``` - n: means to specifically get the nth Synonym for the key (pronouns).
-> * ```$s{uc:n:id}``` - uc:n: means do both get the nth Synonym and UpCase it.
+> * ```$s{uc:n:key}``` - uc:n: means do both get the nth Synonym and UpCase it.
 
 These variations support Synonyms being used at the beginning of sentences, as well as being used as pronouns for proper nouns.
 
