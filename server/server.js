@@ -14,6 +14,7 @@ const chainedMessages = require("./chainedMessages");
 const randomMessages = require("./randomMessages");
 const messages = require("./messages");
 const synonyms = require("./synonyms");
+const agents = require("./agents");
 
 // instance the node server (Express)
 const app = express();
@@ -35,6 +36,7 @@ app.use(config.ENGINE_ROOT, chainedMessages);
 app.use(config.ENGINE_ROOT, randomMessages);
 app.use(config.ENGINE_ROOT, messages);
 app.use(config.ENGINE_ROOT, synonyms);
+app.use(config.ENGINE_ROOT, agents);
 
 /**
  * HTTPS Server Setup and Config

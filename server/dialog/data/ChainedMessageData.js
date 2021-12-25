@@ -1,5 +1,6 @@
 class ChainedMessageData{
-    // Map value prefixes for the chained messages template
+    // see ChainedMessageData.md for templating details.
+    // Supported item value prefixes for the chained messages template
     // $s - Synonyms item. Use $s{uc:id}, $s{n:id}, and $s{uc:n:id} as needed.
     // $m - Messages item
     // $r - RandomMessage item

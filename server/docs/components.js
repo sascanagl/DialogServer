@@ -264,6 +264,25 @@ module.exports = {
                     }
                 }
             },
+            mapOptions:{
+                type: "object",
+                properties:{
+                    name:{
+                        type: "array",
+                        properties:{
+                            type: "object",
+                            properties:{
+                                id:{
+                                    type: "any"
+                                },
+                                text:{
+                                    type: "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             gameState: {
                 type: "object",
                 properties: {

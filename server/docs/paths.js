@@ -12,8 +12,12 @@ const getRandomMessageList = require('./randomMessages/get-randomMessageList');
 const getChainedMessageKeys = require('./chainedMessages/get-chainedMessageKeys');
 const getChainedMessage     = require('./chainedMessages/get-chainedMessage');
 
+const getAgentOptions = require("./agents/get-agentOptions");
+
 module.exports = {
     paths: {
+        '/agent/options' :{ ...getAgentOptions },
+
         '/synonyms'      :{ ...getSynonymsKeys },
         '/synonym/{key}' :{ ...getSynonym },
         '/synonyms/{key}':{ ...getSynonymsList },
