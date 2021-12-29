@@ -14,8 +14,14 @@ const getChainedMessage     = require('./chainedMessages/get-chainedMessage');
 
 const getAgentOptions = require("./agents/get-agentOptions");
 
+const getEngineAbout = require("./engine/get-about");
+const getEngineLogic = require("./engine/get-logic");
+
 module.exports = {
     paths: {
+        '/about' :{ ...getEngineAbout },
+        '/logic' :{ ...getEngineLogic },
+
         '/agent/options' :{ ...getAgentOptions },
 
         '/synonyms'      :{ ...getSynonymsKeys },

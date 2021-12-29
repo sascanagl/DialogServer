@@ -124,6 +124,16 @@ module.exports = {
                     }
                 }
             },
+            gameLogic:{
+                type: "object",
+                properties:{
+                    logic: {
+                        type: "array",
+                        description: "Array of game checks, states, and actions [{w:, z:, n:, t:, c:, e:, i:, o:, a: }]",
+                        example: [{ w:"val", z:"val", n:"val", t:"val", c:"val", e:"val", i:"val", o:"val", a:"val" }]
+                    }
+                }
+            },
             mapKeys:{
                 type: "object",
                 properties:{
