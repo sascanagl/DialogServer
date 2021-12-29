@@ -1,5 +1,5 @@
 class CoreLogicTable{
-    // see CoreLogicTable.md for templating details.
+    // see __CoreLogicTable.md for the details.
     // a value can be empty "" but must never be null
     // world, zone, npc, trigger, checks[], envs[], indlg[], outdlg[],  actions[]
     static logic = [

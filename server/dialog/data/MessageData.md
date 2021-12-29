@@ -68,5 +68,3 @@ So, our example template when invoked might produce phrases like:
 > * ```His colleagues were nearby.```
 > * ```His coworkers were close by.```
 > * ```His associates were very near.```
-
-See the SynonymsData README for more information on Synonyms.
