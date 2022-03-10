@@ -134,6 +134,21 @@ module.exports = {
                     }
                 }
             },
+            gameLocations:{
+                type: "object",
+                properties:{
+                    worldInfo: {
+                        type: "array",
+                        description: "Array of world objects with name and the zones[] in them",
+                        example: {world: 'main', zones:["zone1", "zone2"]}
+                    },
+                    zoneInfo:{
+                        type: "array",
+                        description:"Array of zone objects with name, display name, and the npcs, adjacent zones, and other assets in them",
+                        example:{id:"name", display:"Name", npcs:[{}], adjacents:["zone1", "zone2"]}
+                    }
+                }
+            },
             mapKeys:{
                 type: "object",
                 properties:{

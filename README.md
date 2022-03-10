@@ -38,9 +38,14 @@ Otherwise, make sure the npm dependencies of the server are installed for the pr
 
 ### Enable HTTPS certificate
 
-The server requires a valid site certificate.  It can be a self-signed certificate, but that is only for local development.
+The server requires a valid site certificate.  It can be a self-signed certificate, but that is only for local development.  The easiest self-signed certificate process I've experienced to acquire both the cert and the private key was installing and [using OpenSSL](https://www.ibm.com/docs/en/api-connect/2018.x?topic=overview-generating-self-signed-certificate-using-openssl).
 
-Provide the paths to your specific `key.pem` and `cert.pem` in the `config.js` file as shown in the snippet below:
+Something like:
+
+```
+    openssl req -newkey rsa:4096 -x509 -nodes -keyout key.pem -out cert.pem -days 999
+```
+Then provide the paths to your specific `key.pem` and `cert.pem` in the `config.js` file as shown in the snippet below:
 
 ```
 config.HTTPS_OPTIONS = process.env.DIALOG_HTTPS_OPTIONS || {
@@ -82,11 +87,11 @@ or
 
 ### Connect with clients
 
-The default configuration runs a HTTPS server on PORT 3000
+The default configuration runs a HTTPS server on PORT 3001
 
 In the dev environment on localhost, you can validate success from a client as shown below:
 
-> ```https://localhost:3000/engine/about```
+> ```https://localhost:3001/engine/about```
 
 You should receive back a status code of 200 and a text/plain response like:
 
@@ -94,8 +99,11 @@ You should receive back a status code of 200 and a text/plain response like:
 
 Then Swagger UI should be at:
 
-> ```https://localhost:3000/engine/api```
+> ```https://localhost:3001/engine/api```
 
+A snapshot production build of React App [Business of Murder](https://github.com/sascanagl/DialogEngine) currently in-development is served up from the root:
+
+> ```https://localhost:3001```
 
 ### The Code
 
@@ -112,8 +120,10 @@ The server code is stored in the ```./server/``` directory:
 
 The server Swagger JSON is stored in the ```./server/docs/``` directory and subdirectories.
 
-The functional code for dialog messaging is stored in the ```./server/dialog/``` directory.
+The functional code for the engine API is stored in the ```./server/dialog/``` directory.
 This includes the ```AWS_Polly.js``` interface to Amazon's AWS Polly system.
+
+The production snapshot of the React App is stored in the ```./build/``` directory.
 
 ### Server Access Logs
 

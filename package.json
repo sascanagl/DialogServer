@@ -1,6 +1,6 @@
 {
   "name": "dialogserver",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "dev": "nodemon ./server/server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Carl Nagle<carl.nagle@cjncreations.com>",
+  "license": "APACHE 2.0",
   "dependencies": {
     "@aws-sdk/client-cognito-identity": "^3.32.0",
     "@aws-sdk/client-polly": "^3.32.0",

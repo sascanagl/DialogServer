@@ -5,6 +5,7 @@ require('dotenv').config();
 const config = require("../config");
 
 const http = require("http"), https= require("https"), express = require("express");
+const path = require('path')
 const logger = require("./logger");
 const swaggerUI = require("swagger-ui-express");
 const docs = require('./docs/index');
@@ -24,8 +25,9 @@ app.use(logger);
 
 app.use(express.json());
 app.use(express.text());
-//app.use(express.static());  //requires option for root-path
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, '../build')))
 
 /**
  * Route /engine/ REST Api calls to the engine Router
@@ -37,6 +39,10 @@ app.use(config.ENGINE_ROOT, randomMessages);
 app.use(config.ENGINE_ROOT, messages);
 app.use(config.ENGINE_ROOT, synonyms);
 app.use(config.ENGINE_ROOT, agents);
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'))
+})
 
 /**
  * HTTPS Server Setup and Config

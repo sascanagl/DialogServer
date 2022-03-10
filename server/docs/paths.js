@@ -16,11 +16,13 @@ const getAgentOptions = require("./agents/get-agentOptions");
 
 const getEngineAbout = require("./engine/get-about");
 const getEngineLogic = require("./engine/get-logic");
+const getEngineLocations = require("./engine/get-locations");
 
 module.exports = {
     paths: {
         '/about' :{ ...getEngineAbout },
         '/logic' :{ ...getEngineLogic },
+        '/locations' :{ ...getEngineLocations },
 
         '/agent/options' :{ ...getAgentOptions },
 

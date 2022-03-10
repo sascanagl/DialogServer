@@ -8,7 +8,7 @@ config.VERSION = process.env.npm_package_version || $npm_package_version || "n.n
 config.ENGINE_NAME =  process.env.DIALOG_ENGINE_NAME || "Test Dialog Engine";
 
 config.ENGINE_ROOT = "/engine";
-config.HTTPS_PORT = process.env.DIALOG_HTTPS_PORT       || 3000;
+config.HTTPS_PORT = process.env.DIALOG_HTTPS_PORT       || 3001;
 config.HTTPS_OPTIONS = process.env.DIALOG_HTTPS_OPTIONS || {
      key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem')
