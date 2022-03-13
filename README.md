@@ -174,11 +174,7 @@ The data used by this unique dynamic dialog engine is stored and described in th
 The overall DialogEngine logic is intended to be reusable--supporting different games, game logic, and conversations.  The content and documentation is currently being revamped as the some of the functionality and data is now up on the Server instead of in the client.
 
 ## The 'logic' behind dynamic dialog
-<<<<<<< HEAD
-[CoreLogicTable](server/dialog/data/__CoreLogTable.md)
-=======
-[CoreLogicTable](server/dialog/data/_CoreLogTable.md)
->>>>>>> 2bf233a050d6a0266576448bb99bd643515a53a1
+[CoreLogicTable](server/dialog/data/__CoreLogTable.md): As mentioned, this is my experimentation in implementing a game engine logic tree as I remember seeing it in the Oblivion World Construction Kit.
 
 # The Dynamics of Dynamic Dialog
 Independent of the game logic tree, is an attempt to make a sophisticated dynamic dialog engine intended to deliver a richer dialog experience.
@@ -196,10 +192,6 @@ Just prior to display, the message template is processed and the synonym placeho
 Key to this is that any given message can be made of any number of message snippets, random messages, chained messages, or well-placed synonyms.  The richness is only limited by the amount of dialog data the game designer wants to provide.
 
 ### LocationData.js
-<<<<<<< HEAD
 [LocationData](server/dialog/data/LocationData.js) is where the game world is described.  What all the rooms or zones or locations might be. How they all might be connected together.  What people might be where, at the start of the game.
-=======
-`./server/dialog/data/LocationData.js` is where the game world is described.  What all the rooms or zones or locations might be. How they all might be connected together.  What people might be where, at the start of the game.
->>>>>>> 2bf233a050d6a0266576448bb99bd643515a53a1
 
 More documentation on this will be coming soon, but you can probably figure it out by simply looking at the file.
