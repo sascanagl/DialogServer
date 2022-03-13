@@ -7,3 +7,4 @@ logs
 key.pem
 cert.pem
 config_runtime*
+client/node_modules

@@ -1,0 +1,113 @@
+.App {
+  margin: 2px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  height: 100%;
+}
+a.nounderline {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+.DialogState {
+  width: 100%;
+}
+.MainContent {
+  width: 100%;
+  height: 640px;
+}
+.MainContentTable {
+  width: 100%;
+  height: 100%;
+  border:2px solid black;
+}
+.EnvDialogPane {
+  width: 100%;
+  height: 100%;
+  border-top: 2px solid black;
+  text-align: left;
+  vertical-align: top;
+  background-color: lightgrey;
+}
+.EnvDialogPane.textarea {
+  width: 100%;
+  height: 100%;
+}
+.PlayerDialogPane {
+  width: 37%;
+  height: 80%;
+  border-right: 2px solid black;
+  text-align: left;
+  vertical-align: top;
+  background-color: lightcyan;
+}
+.NPCDialogPane {
+  width: 37%;
+  height: 80%;
+  border-left: 2px solid black;
+  border-right: 1px  solid black;
+  text-align: left;
+  vertical-align: top;
+  background-color: lightcyan;
+}
+.MainContentRightPane {
+  width: 25%;
+  height: 75%;
+  vertical-align: top;
+}
+.LocationSelector {
+  font-size: small;
+}
+.NPCSelector {
+  font-size: small;
+}
+.DialogStateTable {
+  margin: 2px;
+  border: 2px solid black;
+  width: 100%;
+}
+.DialogStateHeader {
+  border: 2px solid black;
+  background-color: lightgray;
+}
+.DialogStateContent {
+  margin: 2px;
+  background-color: rgb(162, 234, 236);
+  text-align: center;
+}
+.LocationSelectorTable {
+  border: 2px solid black;
+  text-align: center;
+  width: 100%;
+}
+.LocationSelectorHeader {
+  background-color: lightgreen;
+}
+.LocationSelectorContent {
+  background-color: rgb(162, 234, 236);
+}
+.NPCSelectorTable {
+  margin-top: 3px;
+  border: 2px solid black;
+  text-align: center;
+  width: 100%;
+}
+.NPCSelectorHeader {
+  background-color: lightgreen;
+}
+.NPCSelectorContent {
+  background-color: rgb(162, 234, 236);
+}
+.PlayerProfileTable{
+  border: 1px solid black;
+  width: 100%;
+  margin-top: 3px;
+}
+.PlayerProfileHeader {
+  text-align: center;
+  background-color: lightskyblue;
+}
+.PlayerProfileContent {
+  background-color: lemonchiffon;
+}

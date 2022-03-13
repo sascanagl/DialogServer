@@ -1,6 +1,6 @@
 /**
  * This represents the start state of a new game.
- * Current state of a single-player game is stored on the client.
+ * Current state of a single-player game is stored on the client (browser storage).
  */
 class LocationData {
 

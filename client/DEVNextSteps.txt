@@ -1,0 +1,4 @@
+* Consider a SOUND action (Bell, Ding, mp3)
+* Make a tag or marker to clear INDLG text.
+ -- since append mode can clutter the screen.
+ -- perhaps changing rooms also automatically clears INDLG text.
