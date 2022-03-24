@@ -1,6 +1,6 @@
-const SynonymMap = require("./SynonymMap");
+
 const MarkedMessage = require("./MarkedMessage");
-const {messages} = require("./data/MessageData");
+const Store = require("./Store");
 
 // message item prefixes:
 const sS  = "$s{"; // synonym
@@ -14,10 +14,12 @@ class MessageMap{
 
     constructor(props){
         if( !props) props = {};
+        this.context= props.context ?? "murder";
+        this.messages = props.messages ?? new Map();
         this.replaceSynonyms = this.replaceSynonyms.bind(this);
         this.replaceProperties = this.replaceProperties.bind(this);
         this.getMessage = this.getMessage.bind(this);
-        this.synonymMap = props.synMap ?? new SynonymMap();
+        this.synonymMap = Store.GetSynonymsMap(this.context);
     }
 
     static log(msg){  /* console.log(msg); */ }
@@ -53,7 +55,7 @@ class MessageMap{
      * The processed message can be just the msgKey again if it was invalid.
      */
     getMessage(msgKey, gameState){
-        let message = String(messages.get(msgKey) ?? msgKey);
+        let message = String(this.messages.get(msgKey) ?? msgKey);
         MessageMap.log(`processing synonyms...`);
         message = this.replaceSynonyms(message);
         if(gameState.player){
@@ -73,10 +75,10 @@ class MessageMap{
     /**
      * @return JSON: object containing count of keys and key names.
      */
-    static getMessageKeys(){
+    getMessageKeys(){
       return {
-          count: messages.size,
-          keys: Array.from(messages.keys())
+          count: this.messages.size,
+          keys: Array.from(this.messages.keys())
       }
     }
 }

@@ -1,9 +1,5 @@
-const SynonymMap       = require("./SynonymMap");
-const MarkedMessage    = require("./MarkedMessage");
-const MessageMap       = require("./MessageMap");
-const RandomMessageMap = require("./RandomMessageMap");
-
-const {chains} = require("./data/ChainedMessageData");
+const MarkedMessage = require("./MarkedMessage");
+const Store = require("./Store");
 
 // Map value prefixes for the chained messages template
 const sS = "$s{"; // id for Synonyms item. Use $s{uc:id}, $s{n:id}, and $s{uc:n:id} as needed.
@@ -13,14 +9,17 @@ const cS = "$c{"; // id for ChainedMessage item
 
 class ChainedMessageMap{
 
-    constructor(){
+    constructor(props){
+        if( !props) props = {};
+        this.context = props.context ?? "murder";
+        this.chains = props.chains ?? new Map();
         this.replaceSynonyms = this.replaceSynonyms.bind(this);
         this.replaceMessages = this.replaceMessages.bind(this);
         this.replaceRandomMessages = this.replaceRandomMessages.bind(this);
         this.getChainedMessages = this.getChainedMessages.bind(this);
-        this.synonymMap = new SynonymMap();
-        this.messageMap = new MessageMap({synMap: this.synonymMap});
-        this.randomMap = new RandomMessageMap({msgMap: this.messageMap});
+        this.synonymMap = Store.GetSynonymsMap(this.context);
+        this.messageMap = Store.GetMessagesMap(this.context);
+        this.randomMap = Store.GetRandomMessagesMap(this.context);
     }
 
     static log(msg){ /* console.log("ChainedMessageMap: "+ msg); */ }
@@ -72,7 +71,7 @@ class ChainedMessageMap{
      * @return JSON: Object with key: and message:
      */
     getChainedMessages(msgKey, gameState, linefeeds){
-        let phrase = chains.get(msgKey);
+        let phrase = this.chains.get(msgKey);
         //console.log("insert linefeeds = "+ linefeeds);
         if(phrase != null && phrase.length > 0){
             phrase = this.replaceSynonyms(phrase);
@@ -93,10 +92,10 @@ class ChainedMessageMap{
     /**
      * @return JSON: object containing count of keys and key names.
      */
-    static getChainedMessageKeys(){
+    getChainedMessageKeys(){
       return {
-          count: chains.size,
-          keys: Array.from(chains.keys())
+          count: this.chains.size,
+          keys: Array.from(this.chains.keys())
       }
     }
 }

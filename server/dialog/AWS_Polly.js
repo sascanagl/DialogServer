@@ -1,6 +1,6 @@
 
-const config = require("../../config");
-const http_serve = require("../http_serve");
+const config = require(appRoot +"/config");
+const http_serve = require(appRoot +"/server/http_serve");
 
 const AWS_IdentityPool = config.AWS_IDENTITY_POOL;
 const AWS_REGION       = config.AWS_REGION;

@@ -111,10 +111,10 @@ This client development server `REQUIRES` the HTTPS server on port 3001 up and r
 Note: You can see and interact with both the HTTPS production snapshot and the HTTP development client simultaneously by using the correct URLS in two different browsers/tabs:
 
 HTTPS Production Snapshot: 
-> ```https://localhost:3001```
+> ```https://localhost:3001/murder```
 
 HTTP React client develop: 
-> ```http://localhost:3000```
+> ```http://localhost:3000/murder```
 
 Note: the client server is NOT required to be running if all you want to do is run the production version of the application.  In that case, you only need the Node server running on port `3001` and it will serve up the application in production mode.
 
@@ -134,9 +134,9 @@ Then Swagger UI should be at:
 
 > ```https://localhost:3001/engine/api```
 
-As mentioned, a production build of React App [Business of Murder](https://github.com/sascanagl/DialogEngine) currently in-development is served up from the root:
+As mentioned, a production build of React App [Business of Murder](https://github.com/sascanagl/DialogEngine) currently in-development is served up from:
 
-> ```https://localhost:3001```
+> ```https://localhost:3001/murder```
 
 ### The Server Code
 
@@ -156,7 +156,7 @@ The server API Swagger UI JSON is stored in the ```./server/docs/``` directory a
 The functional code for the engine API is stored in the ```./server/dialog/``` directory.
 This includes the ```AWS_Polly.js``` interface to Amazon's AWS Polly system.
 
-The production snapshot of the React App is stored in the ```./build/``` directory.
+The production snapshot of the React App is stored in the ```./build/``` directory.  That data for the server is still served from the `client/<game>/data` directories.
 
 ### Server Access Logs
 
@@ -164,30 +164,30 @@ The default configuration stores rotating access logs in the ```./server/logs/``
 
 ### The Dialog Engine Data and Documentation
 
-The data used by this unique dynamic dialog engine is stored and described in the ```./server/dialog/```  and ```./server/dialog/data/``` directories.
+The data used by this unique dynamic dialog engine is stored and described in the ```./server/dialog/```  and ```./client/<game>/data/``` directories.
 
 ## Reusable Dialog Engine
 The overall DialogEngine logic is intended to be reusable--supporting different games, game logic, and conversations.  The content and documentation is currently being revamped as the some of the functionality and data is now up on the Server instead of in the client.
 
 ## The 'logic' behind dynamic dialog
-[CoreLogicTable](server/dialog/data/__CoreLogTable.md): As mentioned, this is my experimentation in implementing a game engine logic tree as I remember seeing it in the Oblivion World Construction Kit.
+[CoreLogicTable](./__CoreLogTable.md): As mentioned, this is my experimentation in implementing a game engine logic tree as I remember seeing it in the Oblivion World Construction Kit.
 
 # The Dynamics of Dynamic Dialog
 Independent of the game logic tree, is an attempt to make a sophisticated dynamic dialog engine intended to deliver a richer dialog experience.
 
-[SynonymsMap](server/dialog/data/SynonymsData.md): Starts by providing a large array of root words and a list of synonyms.
+[SynonymsMap](./SynonymsData.md): Starts by providing a large array of root words and a list of synonyms.
 
-[MessageMap](server/dialog/data/MessageData.md): Templates of possible messages--which might be whole sentences or snippets of sentences--are defined with references to synonyms in them.
+[MessageMap](./MessageData.md): Templates of possible messages--which might be whole sentences or snippets of sentences--are defined with references to synonyms in them.
 
 Just prior to display, the message template is processed and the synonym placeholders are replaced dynamically.  This makes that message different each time it is used.  The more synonyms available, the more unique each message can be each time it is used.
 
-[RandomMessageMap](server/dialog/data/RandomMessageData.md): Messages can be grouped together and defined as an array of related messages that can be randomly chosen to satisfy a particular message.  Instead of always displaying the same message, the game can randomly choose from N number of related messages.  And all of these messages are dynamically generated from templates as described above.
+[RandomMessageMap](./RandomMessageData.md): Messages can be grouped together and defined as an array of related messages that can be randomly chosen to satisfy a particular message.  Instead of always displaying the same message, the game can randomly choose from N number of related messages.  And all of these messages are dynamically generated from templates as described above.
 
-[ChainedMessageMap](server/dialog/data/ChainedMessageData.md): Additionally, messages can be chained together.  This is helpful when a longer dialog is needed to convey more information.  The chained messages can also take advantage of using the random message map.  So an N message monologue can actually be made from N random but related messages stringed together making the whole monologue unique each time it is seen (or heard).
+[ChainedMessageMap](./ChainedMessageData.md): Additionally, messages can be chained together.  This is helpful when a longer dialog is needed to convey more information.  The chained messages can also take advantage of using the random message map.  So an N message monologue can actually be made from N random but related messages stringed together making the whole monologue unique each time it is seen (or heard).
 
 Key to this is that any given message can be made of any number of message snippets, random messages, chained messages, or well-placed synonyms.  The richness is only limited by the amount of dialog data the game designer wants to provide.
 
 ### LocationData.js
-[LocationData](server/dialog/data/LocationData.js) is where the game world is described.  What all the rooms or zones or locations might be. How they all might be connected together.  What people might be where, at the start of the game.
+[LocationData](client/murder/data/LocationData.js) is where the game world is described.  What all the rooms or zones or locations might be. How they all might be connected together.  What people might be where, at the start of the game.
 
 More documentation on this will be coming soon, but you can probably figure it out by simply looking at the file.

@@ -6,15 +6,30 @@ const messages = express.Router();
 const MessageMap = require("./dialog/MessageMap");
 const AWS_Polly = require("./dialog/AWS_Polly");
 const http_serve = require("./http_serve");
+const Store = require("./dialog/Store")
 
 /*
  * messages endpoint to GET the collection of message keys in storage.
  * @return JSON: { "count": N, "keys": [strings...] }
  */
-messages.get('/messages', function(req,res) {
-    http_serve.respondApplicationJson( 200,
-        MessageMap.getMessageKeys(), res, req
-    );
+messages.get('/:game/messages', function(req,res) {
+    var game = req.params.game || "";
+    if(game.length == 0){
+        http_serve.respondApplicationJson(400, {
+                message: "Invalid Get Messages url",
+                internal_code: "Invalid Messages url"
+            }, res, req);
+        return;
+    }
+    var map = Store.GetMessagesMap(game);
+    if(map===undefined){
+        http_serve.respondApplicationJson( 400, {
+            message: "Invalid Get Messages url for "+ game,
+            internal_code: "Invalid MessageMap url"
+        }, res, req);
+        return;
+    }
+    http_serve.respondApplicationJson( 200, map.getMessageKeys(), res, req );
 });
 
 /*
@@ -28,19 +43,28 @@ messages.get('/messages', function(req,res) {
  * { "key": string, "message": string, speechUrl: string }
  * { "key": string, "message": string, speechError: string }
  */
-messages.post('/message/:key', function(req,res) {
+messages.post('/:game/message/:key', function(req,res) {
     var key = req.params.key ?? "";
-    if(key.length == 0){
+    var game = req.params.game ?? "";
+    if(key.length == 0 || game.length ==0){
         http_serve.respondApplicationJson( 400, {
-            message: "Message cannot be found",
-            internal_code: "Invalid Messages Key"
+            message: "Message cannot be found for game key",
+            internal_code: "Invalid Messages Game Key"
+        }, res, req);
+        return;
+    }
+    var map = Store.GetMessagesMap(game);
+    if(map===undefined){
+        http_serve.respondApplicationJson( 400, {
+            message: "Invalid Get Messages url for "+ game,
+            internal_code: "Invalid Messages url"
         }, res, req);
         return;
     }
     if(req.body){
         var gameState = req.body;
         // TODO: need to handle the case where the key is invalid!
-        var jsonObj = new MessageMap().getMessage(key, gameState);
+        var jsonObj = map.getMessage(key, gameState);
         var voice;
         if(req.query.voice && req.query.voice.length > 0){
             try{
@@ -61,5 +85,4 @@ messages.post('/message/:key', function(req,res) {
         }, res, req);
     }
 });
-
 module.exports = messages;

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/murder/static/css/main.9e9ab011.css",
+    "main.js": "/murder/static/js/main.920f2be3.js",
+    "index.html": "/murder/index.html",
+    "main.9e9ab011.css.map": "/murder/static/css/main.9e9ab011.css.map",
+    "main.920f2be3.js.map": "/murder/static/js/main.920f2be3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9e9ab011.css",
+    "static/js/main.920f2be3.js"
+  ]
+}

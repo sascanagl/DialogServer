@@ -1,14 +1,14 @@
-const MessageMap = require("./MessageMap");
+const Store = require("./Store");
 
-const {messages} = require("./data/RandomMessageData");
-6
 class RandomMessageMap{
 
     constructor(props){
       if(!props) props = {};
+      this.context = props.context ?? "murder";
+      this.messages = props.messages ?? new Map();
       this.getRandomMessage = this.getRandomMessage.bind(this);
       this.getRandomMessageList = this.getRandomMessageList.bind(this);
-      this.messageMap = props.msgMap ?? new MessageMap();
+      this.messageMap = Store.GetMessagesMap(this.context);
     }
 
     static log(msg){ /* console.log("RandomMessageMap: "+ msg); */ }
@@ -24,7 +24,7 @@ class RandomMessageMap{
       let message = { key: strKey, message: " "};
       if(strKey != null && strKey.length > 0){
         let lckey = strKey.toLowerCase();
-        let objSynonyms = messages.get(lckey);
+        let objSynonyms = this.messages.get(lckey);
         if (objSynonyms){
           let skey = objSynonyms.getSynonym();
           if (skey != null && skey.length > 0) {
@@ -44,7 +44,7 @@ class RandomMessageMap{
     getRandomMessageList(akey){
         var list;
         try{ 
-          list = messages.get(akey.toLowerCase()).getSynonyms(); }
+          list = this.messages.get(akey.toLowerCase()).getSynonyms(); }
         catch(err){ // handle invalid key
           list = [];
         }
@@ -58,10 +58,10 @@ class RandomMessageMap{
     /**
      * @return JSON: object containing count of keys and key names.
      */
-    static getRandomMessageKeys(){
+    getRandomMessageKeys(){
       return {
-        count: messages.size,
-        keys: Array.from(messages.keys())
+        count: this.messages.size,
+        keys: Array.from(this.messages.keys())
       }
     }
 }

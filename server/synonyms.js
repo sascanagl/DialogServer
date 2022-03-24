@@ -1,18 +1,36 @@
 // ./server/synonyms.js - api for synonyms
-// api_path - /engine/synonyms
+// api_path - /:game/data/synonyms
 
 const express = require("express");
-const synonyms = express.Router();
 const SynonymMap = require("./dialog/SynonymMap");
 const AWS_Polly = require("./dialog/AWS_Polly");
 const http_serve = require("./http_serve");
+const synonyms = express.Router();
+const Store = require("./dialog/Store");
 
 /*
  * synonyms endpoint to GET the collection of synonym keys in storage.
  * @return JSON: { "count": N, "keys": [strings...] }
  */
-synonyms.get('/synonyms', function(req,res) {
-    var jsonObj = SynonymMap.getSynonymKeys();
+synonyms.get('/:game/synonyms', function(req,res) {
+    var game = req.params.game || "";
+    if(game.length == 0){
+        http_serve.respondApplicationJson(400, {
+                message: "Invalid Get Synonyms url",
+                internal_code: "Invalid Synonyms url"
+            }, res, req);
+        return;
+    }
+    // map type SynonymMap
+    var map = Store.GetSynonymsMap(game);
+    if(map===undefined){
+        http_serve.respondApplicationJson( 400, {
+            message: "SynonymMap could not be found for "+ game,
+            internal_code: "Invalid SynonymMap url"
+        }, res, req);
+        return;
+    }
+    var jsonObj = map.getSynonymKeys();
     http_serve.respondApplicationJson(200, jsonObj, res, req);
 });
 
@@ -31,16 +49,25 @@ synonyms.get('/synonyms', function(req,res) {
  * { "key": string, "synonym": string, speechUrl: string }
  * { "key": string, "synonym": string, speechError: string }
  */
-synonyms.get('/synonym/:key', function(req,res) {
+synonyms.get('/:game/synonym/:key', function(req,res) {
+    var game = req.params.game || "";
     var key = req.params.key || "";
-    if(key.length == 0){
+    if(game.length == 0 || key.length == 0){
         http_serve.respondApplicationJson(400, {
-                message: "Synonym cannot be found",
-                internal_code: "Invalid Synonyms Key"
+                message: "Invalid Synonyms KEY url",
+                internal_code: "Invalid Synonyms KEY url"
             }, res, req);
         return;
     }
-    var jsonObj = new SynonymMap().getSynonym(key);  // can be key unchanged
+    var map = Store.GetSynonymsMap(game);
+    if(map===undefined){
+        http_serve.respondApplicationJson( 400, {
+            message: "SynonymMap could not be found for "+ game,
+            internal_code: "Invalid SynonymMap GAME ID"
+        }, res, req);
+        return;
+    }
+    var jsonObj = map.getSynonym(key);  // can be key unchanged
     var voice;
     if(req.query.voice && req.query.voice.length > 0){
         try{
@@ -65,16 +92,25 @@ synonyms.get('/synonym/:key', function(req,res) {
  * { "key": string, count: N, "synonyms": [string...], speechUrl: string }
  * { "key": string, count: N, "synonyms": [string...], speechError: string }
   */
-synonyms.get('/synonyms/:key', function(req,res) {
+synonyms.get('/:game/synonyms/:key', function(req,res) {
+    var game = req.params.game || "";
     var key = req.params.key || "";
-    if(key.length == 0){
+    if(game.length == 0 || key.length == 0){
+        http_serve.respondApplicationJson(400, {
+                message: "Invalid Synonyms KEY url",
+                internal_code: "Invalid Synonyms KEY url"
+            }, res, req);
+        return;
+    }
+    var map = Store.GetSynonymsMap(game);
+    if(map===undefined){
         http_serve.respondApplicationJson( 400, {
-            message: "Synonyms cannot be found",
-            internal_code: "Invalid Synonyms Key"
+            message: "Synonyms could not be found for "+ game,
+            internal_code: "Invalid Synonyms KEY url"
         }, res, req);
         return;
     }
-    var jsonObj = new SynonymMap().getSynonymsList(key);
+    var jsonObj = map.getSynonymsList(key);
     var voice;
     if(req.query.voice && req.query.voice.length > 0){
         try{
@@ -89,5 +125,4 @@ synonyms.get('/synonyms/:key', function(req,res) {
         http_serve.respondApplicationJson( 200, jsonObj, res, req);
     }
 });
-
 module.exports = synonyms;

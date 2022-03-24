@@ -1,6 +1,5 @@
 
 class http_serve {
-
     /**
      * Send status and JSON.stringify jsonObj into application/json
      * @param {*} jsonObj

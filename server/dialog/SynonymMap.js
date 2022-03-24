@@ -1,14 +1,19 @@
+
+const Store= require("./Store");
+
 /**
  * Map<string, Synonyms> \
  * "key" = string - root word or primary word with assigned Synonyms. \
  * "value" = Synonyms - class instance of all synonyms to be considered for that key. \
  * A proper noun key can, instead, be storing the pronouns to use for that noun.
  **/
-const {synonyms} = require("./data/SynonymsData");
 
 class SynonymMap{
 
-    constructor() {
+    constructor(props) {
+      if (!props) props = {};
+      this.context = props.context ?? "murder";
+      this.synonyms = props.synonyms ?? new Map();
       this.capFirst = this.capFirst.bind(this);
       this.getSynonym = this.getSynonym.bind(this);
       this.getSynonymsList = this.getSynonymsList.bind(this);
@@ -50,7 +55,7 @@ class SynonymMap{
         }
         // return null or new word
         // null means use the key given
-        let objSynonym = synonyms.get(key.toLowerCase());
+        let objSynonym = this.synonyms.get(key.toLowerCase());
         if(objSynonym != null){
             let str = null;
             if(person > 0){
@@ -78,7 +83,7 @@ class SynonymMap{
     getSynonymsList(strWord){
         var list;
         try{
-            list = synonyms.get(strWord.toLowerCase()).getSynonyms();
+            list = this.synonyms.get(strWord.toLowerCase()).getSynonyms();
         }catch(err){
             list = [];
         }
@@ -92,10 +97,10 @@ class SynonymMap{
     /**
      * @return JSON: object containing count of keys and key names.
      */
-    static getSynonymKeys(){
+    getSynonymKeys(){
       return {
-          count: synonyms.size,
-          keys: Array.from(synonyms.keys())
+          count: this.synonyms.size,
+          keys: Array.from(this.synonyms.keys())
       }
     }
 }

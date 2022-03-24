@@ -8,3 +8,4 @@ key.pem
 cert.pem
 config_runtime*
 client/node_modules
+client/murder/build

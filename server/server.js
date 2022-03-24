@@ -2,15 +2,18 @@
 
 require('dotenv').config();
 
-const config = require("../config");
+const path = require('path')
+global.appRoot = path.resolve(__dirname, "../");
+
+const config = require(appRoot +"/config");
 
 const http = require("http"), https= require("https"), express = require("express");
-const path = require('path')
 const logger = require("./logger");
 const swaggerUI = require("swagger-ui-express");
 const docs = require('./docs/index');
 
 const engine = require("./engine");
+const logic = require("./logic");
 const chainedMessages = require("./chainedMessages");
 const randomMessages = require("./randomMessages");
 const messages = require("./messages");
@@ -27,21 +30,25 @@ app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, '../build')))
+// Need to put a default landing page for all games here (not yet working)
+app.use(express.static(appRoot +'/build'))
 
 /**
  * Route /engine/ REST Api calls to the engine Router
  */
 app.use(config.ENGINE_ROOT, engine);
 app.use(`${config.ENGINE_ROOT}/api`, swaggerUI.serve, swaggerUI.setup(docs));
-app.use(config.ENGINE_ROOT, chainedMessages);
-app.use(config.ENGINE_ROOT, randomMessages);
-app.use(config.ENGINE_ROOT, messages);
-app.use(config.ENGINE_ROOT, synonyms);
-app.use(config.ENGINE_ROOT, agents);
+app.use(`/`, logic);
+app.use(`/`, chainedMessages);
+app.use(`/`, randomMessages);
+app.use(`/`, messages);
+app.use(`/`, synonyms);
+app.use(`/`, agents);
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'))
+// GET on production game builds -- WAS WORKING
+app.get('/:game', function (req, res) {
+    var game = req.params.game;
+    res.sendFile(path.join(appRoot +'/build/', game, 'index.html'))
 })
 
 /**
