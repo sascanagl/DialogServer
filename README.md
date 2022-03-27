@@ -145,7 +145,8 @@ The server code is stored in the ```./server/``` directory:
 - ```http_serve.js``` - shared http response code/library.
 - ```server.js``` - configures the Node Express server using ```config.js```and these below:
 - ```logger.js``` - configures the Morgan access log for the file system.
-- ```engine.js``` - configures the API Express Router endpoints for the server.
+- ```logic.js``` - express router for instance logic and locations.
+- ```engine.js``` - express router for instances and info.
 - ```synonyms.js``` - express router for Synonyms endpoints.
 - ```messages.js``` - express router for Messages endpoints.
 - ```randomMessages.js``` - express router for RandomMessages endpoints.
@@ -156,7 +157,8 @@ The server API Swagger UI JSON is stored in the ```./server/docs/``` directory a
 The functional code for the engine API is stored in the ```./server/dialog/``` directory.
 This includes the ```AWS_Polly.js``` interface to Amazon's AWS Polly system.
 
-The production snapshot of the React App is stored in the ```./build/``` directory.  That data for the server is still served from the `client/<game>/data` directories.
+The production snapshot of the React App is stored in the ```./build/``` directory.  
+The data for each separate instance is still served from the `client/<instance>/data` directories.
 
 ### Server Access Logs
 
@@ -164,10 +166,10 @@ The default configuration stores rotating access logs in the ```./server/logs/``
 
 ### The Dialog Engine Data and Documentation
 
-The data used by this unique dynamic dialog engine is stored and described in the ```./server/dialog/```  and ```./client/<game>/data/``` directories.
+The data used by this unique dynamic dialog engine is stored and described in the ```./server/dialog/``` and ```./client/<instance>/data/``` directories.
 
 ## Reusable Dialog Engine
-The overall DialogEngine logic is intended to be reusable--supporting different games, game logic, and conversations.  The content and documentation is currently being revamped as the some of the functionality and data is now up on the Server instead of in the client.
+The overall DialogEngine logic is entirely reusable--supporting different games, game logic, and conversations available simultaneously.
 
 ## The 'logic' behind dynamic dialog
 [CoreLogicTable](./__CoreLogTable.md): As mentioned, this is my experimentation in implementing a game engine logic tree as I remember seeing it in the Oblivion World Construction Kit.
