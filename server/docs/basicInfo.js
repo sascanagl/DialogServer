@@ -1,4 +1,4 @@
-const config = require('../../config');
+const config = require(appRoot +'/config');
 
 module.exports = {
     openapi: "3.0.3",

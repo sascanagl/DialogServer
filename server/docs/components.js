@@ -1,11 +1,47 @@
 module.exports = {
     components:{
         responses: {
+            agentOptionsResponse: {
+                description: "JSON response of the agent/npc options for the instance",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/mapOptions" }
+                }}},
             mapStrResponse: {
                 description: "JSON response of a single map string value",
                 content: {
                     "application/json": {
                         schema: { $ref: "#/components/schemas/mapStrValue" }
+                }}},
+            mapStrTTSResponse: {
+                description: "JSON response of a value including Text To Speech",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/mapStrTTSValue" }
+                }}},
+            mapStrTTSErrorResponse: {
+                description: "JSON Error response of a value with Text To Speech",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/mapStrTTSError" }
+                }}},
+            gameInstancesResponse: {
+                description: "JSON response of the active instances running on the server",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/gameInstances" }
+                }}},
+            gameLogicResponse: {
+                description: "JSON response of the active instances running on the server",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/gameLogic" }
+                }}},
+            gameLocationsResponse: {
+                description: "JSON response of the active instances running on the server",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/gameLocations" }
                 }}},
             mapKeysResponse: {
                 description: "JSON response of a list of map key values",
@@ -18,6 +54,12 @@ module.exports = {
                 content: {
                     "application/json": {
                         schema: { $ref: "#/components/schemas/mapList" }
+                }}},
+            GeneralError: {
+                description: "Generic Error response",
+                content: {
+                    "application/json": {
+                        schema: { $ref: "#/components/schemas/Error" }
                 }}},
             ParamError: {
                 description: "Invalid or missing parameter",
@@ -33,6 +75,14 @@ module.exports = {
                 }}}
         },
         parameters: {
+            instanceIdParam: {
+                name: "instance",
+                in: "path",
+                schema: { $ref: "#/components/schemas/strKey" },
+                required: true,
+                description: "The instance/name for the desired game or instance",
+                example: "murder"
+            },
             keyIdParam: {
                 name: "key",
                 in: "path",
@@ -75,7 +125,7 @@ module.exports = {
             voiceKey: {
                 type: "string",
                 description: "Query Param providing the Polly voice to use for TTS",
-                examples:{
+                example:{
                     "Ivy": {
                         value: "?param=Ivy",
                         summary: "Female child"
@@ -113,7 +163,7 @@ module.exports = {
             boolVal: {
                 type: "boolean",
                 description: "Query param true/false",
-                examples:{
+                example:{
                     "unset": {
                         value: "?param",
                         summary: "No value defaults to boolean true"
@@ -146,6 +196,19 @@ module.exports = {
                         type: "array",
                         description:"Array of zone objects with name, display name, and the npcs, adjacent zones, and other assets in them",
                         example:{id:"name", display:"Name", npcs:[{}], adjacents:["zone1", "zone2"]}
+                    }
+                }
+            },
+            gameInstances:{
+                type: "object",
+                properties:{
+                    instances: {
+                        type: "array",
+                        description: "Array of instances/games/data running on the server",
+                        example: [
+                            { name: "murder", link: "https://localhost:3001/murder" },
+                            { name: "training", link: "https://localhost:3001/training" }
+                        ]
                     }
                 }
             },
@@ -292,18 +355,18 @@ module.exports = {
             mapOptions:{
                 type: "object",
                 properties:{
-                    name:{
-                        type: "array",
-                        properties:{
-                            type: "object",
-                            properties:{
-                                id:{
-                                    type: "any"
-                                },
-                                text:{
-                                    type: "string"
-                                }
-                            }
+                    agentOptions: {
+                        type: "object",
+                        description: "Properties and available options",
+                        example: { 
+                            genderOptions : [
+                                { id: "male", text: "Male" },
+                                { id: "female", text: "Female" }
+                            ],
+                            strengthOptions: [
+                                { id: 1, text: "Weak" },
+                                { id: 1, text: "Weak" }
+                            ]
                         }
                     }
                 }

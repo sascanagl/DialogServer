@@ -8,25 +8,19 @@ module.exports = {
         description: "Get chained messages for key",
         operationId: "getChainedMessage",
         parameters: [
+            { $ref: "#/components/parameters/instanceIdParam" },
             { $ref: "#/components/parameters/keyIdParam" },
             { $ref: "#/components/parameters/newlinesParam" },
             { $ref: "#/components/parameters/voiceParam" }
         ],
         requestBody: { $ref: "#/components/requestBodies/gameStateBody" },
         responses:{
-            200:{
-                description: "JSON Object with the key, message, and possible TTS speechUrl or speechError",
-                type: "object",
-                oneOf:[
-                { $ref: "#/components/schemas/mapStrValue" },
-                { $ref: "#/components/schemas/mapStrTTSValue" },
-                { $ref: "#/components/schemas/mapStrTTSError" }
+            '200':{ oneOf:[
+                { $ref: "#/components/responses/mapStrValue" },
+                { $ref: "#/components/responses/mapStrTTSValue" },
+                { $ref: "#/components/responses/mapStrTTSErrorResponse" }
             ]},
-            400:{
-                description:"JSON Object with a message and an internal error detail",
-                type: "object",
-                schema: { $ref: "#/components/schemas/Error" }
-            }
+            '400':{ $ref: "#/components/responses/GeneralError" }
         }
     }
 }

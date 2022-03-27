@@ -1,9 +1,9 @@
-const config = require(`../../config`);
+const config = require(appRoot +`/config`);
 
 module.exports = {
     servers: [
         {
-            url: `https://localhost:${config.HTTPS_PORT}${config.ENGINE_ROOT}`,
+            url: `https://localhost:${config.HTTPS_PORT}`,
             description: "Local Dev Server",
         }
     ],

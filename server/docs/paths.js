@@ -1,3 +1,6 @@
+const getLogic = require("./logic/get-logic");
+const getLocations = require("./logic/get-locations");
+
 const getSynonymsKeys = require('./synonyms/get-synonymsKeys');
 const getSynonym      = require('./synonyms/get-synonym');
 const getSynonymsList = require('./synonyms/get-synonymsList');
@@ -15,29 +18,29 @@ const getChainedMessage     = require('./chainedMessages/get-chainedMessage');
 const getAgentOptions = require("./agents/get-agentOptions");
 
 const getEngineAbout = require("./engine/get-about");
-const getEngineLogic = require("./engine/get-logic");
-const getEngineLocations = require("./engine/get-locations");
+const getEngineInstances = require("./engine/get-instances");
 
 module.exports = {
     paths: {
-        '/about' :{ ...getEngineAbout },
-        '/logic' :{ ...getEngineLogic },
-        '/locations' :{ ...getEngineLocations },
+        '/engine/about' :{ ...getEngineAbout },
+        '/engine/instances' :{ ...getEngineInstances },
+        '/{instance}/logic' :{ ...getLogic },
+        '/{instance}/locations' :{ ...getLocations },
 
-        '/agent/options' :{ ...getAgentOptions },
+        '/{instance}/agent/options' :{ ...getAgentOptions },
 
-        '/synonyms'      :{ ...getSynonymsKeys },
-        '/synonym/{key}' :{ ...getSynonym },
-        '/synonyms/{key}':{ ...getSynonymsList },
+        '/{instance}/synonyms'      :{ ...getSynonymsKeys },
+        '/{instance}/synonym/{key}' :{ ...getSynonym },
+        '/{instance}/synonyms/{key}':{ ...getSynonymsList },
 
-        '/messages'     :{ ...getMessageKeys },
-        '/message/{key}':{ ...getMessage },
+        '/{instance}/messages'     :{ ...getMessageKeys },
+        '/{instance}/message/{key}':{ ...getMessage },
 
-        '/randomMessages'      :{ ...getRandomMessageKeys },
-        '/randomMessage/{key}' :{ ...getRandomMessage },
-        '/randomMessages/{key}':{ ...getRandomMessageList },
+        '/{instance}/randomMessages'      :{ ...getRandomMessageKeys },
+        '/{instance}/randomMessage/{key}' :{ ...getRandomMessage },
+        '/{instance}/randomMessages/{key}':{ ...getRandomMessageList },
 
-        '/chainedMessages'     :{ ...getChainedMessageKeys },
-        '/chainedMessage/{key}':{ ...getChainedMessage }
+        '/{instance}/chainedMessages'     :{ ...getChainedMessageKeys },
+        '/{instance}/chainedMessage/{key}':{ ...getChainedMessage }
     }
 }
